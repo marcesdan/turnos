@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MedicoService;
 use App\Services\UserService;
 use App\Http\Requests\UserRequest;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 /**
  * Class UserController
@@ -13,24 +15,43 @@ use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
 
+    use RegistersUsers;
+    use SendsPasswordResetEmails;
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/admin/usuarios';
+
     /**
      * @var UserService
      */
     protected $userService;
-    /**
-     * @var MedicoService
-     */
-    protected $medicoService;
 
     /**
      * UserController constructor.
      * @param UserService $userService
-     * @param MedicoService $medicoService
      */
-    public function __construct(UserService $userService, MedicoService $medicoService)
+    public function __construct(UserService $userService)
     {
         $this->userService = $userService;
-        $this->medicoService = $medicoService;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param UserRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(UserRequest $request)
+    {
+        $input = $request->validated();
+        $user = $this->userService->register($input);
+        event(new Registered($user));
+        $this->sendResetLinkEmail($request);
+        return redirect($this->redirectPath());
     }
 
     /**
@@ -51,8 +72,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $especialidades = $this->medicoService->findAllEspecialidades();
-        return view('user.create', ['especialidades' => $especialidades]);
+        return view('user.create');
     }
 
     /**
@@ -90,7 +110,7 @@ class UserController extends Controller
         $user = $this->userService->find($id);
         $validatedData = $request->validated();
         $this->userService->update($validatedData, $user);
-        return redirect('/admin/usuario')->with('status', 'Usuario editado con éxito!');
+        return redirect('/admin/usuarios')->with('status', 'Usuario editado con éxito!');
     }
 
     /**

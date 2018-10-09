@@ -8,7 +8,9 @@
 
 namespace App\Services;
 
+use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserService
@@ -21,7 +23,10 @@ class UserService
      */
     public function findAll()
     {
-        return User::all();
+        // retornamos todos los usuarios que no son médicos
+        return User::whereDoesntHave('role', function ($q) {
+            $q->where('nombre', 'Médico');
+        })->get();
     }
 
     /** Retona el usuario con un $id
@@ -33,18 +38,42 @@ class UserService
         return User::findOrFail($id);
     }
 
+    /** Regista un usuario en el sistema
+     * @param $input , campos del nuevo usuario
+     * @return User, el usuario registrado
+     */
+    public function register($input)
+    {
+        return $this->createUser($input, $input['rol']);
+    }
+
+    /** Crea un usuario en el sistema, puede ser utilizado por otros servicios
+     * @param $input , los campos del nuevo usuario
+     * @param $rol , el rol que juega el usuario en el sistema
+     * @return User, el usuario registrado
+     */
+    public function createUser($input, $rol)
+    {
+        //se crea al usuario
+        $role = Role::where('nombre', $rol)->first();
+        $user = new User();
+        $user->fill($input);
+        $user->password = Hash::make(str_random(8));
+        $user->role()->associate($role);
+        $user->save();
+        return $user;
+    }
+
     /** Actualiza el $user dado con $input
      * @param $input
      * @param User $user
+     * @return User
      */
     public function update($input, User $user)
     {
-        $user->fill([
-            'nombre' => $input['nombre'],
-            'apellido' => $input['apellido'],
-            'email' => $input['email'],
-        ]);
+        $user->fill($input);
         $user->save();
+        return $user;
     }
 
 

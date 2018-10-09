@@ -10,20 +10,26 @@
           </div>
           <ul class="app-menu">
             <li>
-              <a class="app-menu__item {{ Request::is('admin/usuario**') ? 'active' : '' }}" href="/admin/usuario">
-                <i class="app-menu__icon fa fa-user"></i>
+              <a class="app-menu__item {{ Request::is('admin/usuario**') ? 'active' : '' }}" href="/admin/usuarios">
+                <i class="app-menu__icon fa fa-user fa-lg"></i>
                 <span class="app-menu__label">Usuarios</span>
               </a>
             </li>
+              <li>
+                  <a class="app-menu__item {{ Request::is('medico**') ? 'active' : '' }}" href="/admin/medicos">
+                      <i class="app-menu__icon fa fa-user-md fa-lg"></i>
+                      <span class="app-menu__label">Médicos</span>
+                  </a>
+              </li>
             <li>
-              <a class="app-menu__item {{ Request::is('paciente**') ? 'active' : '' }}" href="/paciente">
+              <a class="app-menu__item {{ Request::is('paciente**') ? 'active' : '' }}" href="/pacientes">
                 <i class="app-menu__icon fa fa-heart"></i>
                 <span class="app-menu__label">Pacientes</span>
               </a>
             </li>
             <li>
               <a class="app-menu__item {{ Request::is('turnos/**') ? 'active' : '' }}" href="/turnos">
-                <i class="app-menu__icon fa fa-medkit"></i>
+                <i class="app-menu__icon fa fa-calendar fa-lg"></i>
                 <span class="app-menu__label">Turnos</span>
               </a>
             </li>

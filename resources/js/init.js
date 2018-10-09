@@ -1,6 +1,4 @@
 //window._ = require('lodash');
-window.Popper = require('popper.js').default;
-
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -8,7 +6,11 @@ window.Popper = require('popper.js').default;
  * code may be modified to fit the specific needs of your application.
  */
 
+import pace from 'pace-js';
+pace.start();
+
 try {
+	window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     require('./vendor/bootstrap');  
 	require( 'datatables.net-bs4' )

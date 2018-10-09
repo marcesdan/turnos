@@ -17,5 +17,6 @@
         @include('auth.passwords.email-form')
       </div>
     </section>
+    <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 </html>

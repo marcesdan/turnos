@@ -1,8 +1,3 @@
-@if (session('status'))
-<div class="alert alert-success" role="alert">
-    {{ session('status') }}
-</div>
-@endif
 <form class="forget-form" method="POST" action="{{ route('password.email') }}">
   @csrf
   <h5 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Olvidaste tu contraseña ?</h3>

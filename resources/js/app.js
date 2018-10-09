@@ -8,7 +8,8 @@
 require('./init');
 require('./valiadmin');
 require('./user/index');
-require('./user/create');
+require('./medico/index');
+require('./medico/create');
 require('./paciente/index');
 
 

@@ -8,13 +8,13 @@
   </div>
   <ul class="app-breadcrumb breadcrumb">
       <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="/admin/usuario">Usuarios</a></li>
+      <li class="breadcrumb-item"><a href="/admin/usuarios">Usuarios</a></li>
       <li class="breadcrumb-item"><a href="#">Editar usuario</a></li>
   </ul>
 </div>
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form method="post" action="/admin/usuario/{{$user->id}}">
+    <form method="post" action="/admin/usuarios/{{$user->id}}">
       <div class="tile">
         <h3 class="tile-title">Datos del usuario</h3>
         <div class="tile-body">
@@ -64,9 +64,28 @@
                   </span>
               @endif
             </div>
+
+            <div class="form-group">
+                <label for="rol">Rol</label>
+                <select class="form-control" id="rol" name="rol">
+                    <option value="Administrador">Administrador</option>
+                    <option value="Recepcionista">Recepcionista</option>
+                    <option value="{{ old("rol") ?: $user->role->nombre }}" selected>
+                        {{ old("rol") ?: $user->role->nombre }}
+                    </option>
+                </select>
+            </div>
+
         </div> <!-- tile-body -->
         <div class="tile-footer text-center">
-          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="/admin/usuario"><i class="fa fa-fw fa-lg fa-times-circle"></i>Volver</a>
+          <button class="btn btn-primary" type="submit">
+              <i class="fa fa-fw fa-lg fa-check-circle"></i>
+              Guardar
+          </button>&nbsp;&nbsp;&nbsp;
+            <a class="btn btn-secondary" href="/admin/usuarios">
+                <i class="fa fa-fw fa-lg fa-times-circle"></i>
+                Volver
+            </a>
         </div>
       </div> <!-- tile -->
     </form>

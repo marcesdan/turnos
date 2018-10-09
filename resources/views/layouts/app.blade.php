@@ -2,6 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
     <head>
         @include('layouts.head')
+        <script src="{{ mix('/js/app.js') }}" defer></script>
     </head>
     <body class="app sidebar-mini rtl">
         @include('layouts.navbar')
@@ -10,7 +11,6 @@
             @yield('content')
             @include('layouts.footer')
         </main>
-        <script src="{{ mix('/js/app.js') }}"></script>
         @includeWhen(session('status'), 'layouts.notify')
         @yield('scripts')
       </body>

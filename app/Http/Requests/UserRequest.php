@@ -31,6 +31,12 @@ class UserRequest extends FormRequest
                 'required','string','max:255','email',
                 'unique:user,email,'.$this->route('id') ?? 0
             ],
+            'rol' => [
+                Rule::in([
+                    'Administrador',
+                    'Recepcionista'
+                ]),
+            ],
         ];
     }
 }

@@ -26,7 +26,7 @@ $(function() {
         })
         .then((willDelete) => {
             if (willDelete) {  
-                axios.delete('/admin/usuario/' + userId);
+                axios.delete('/admin/usuarios/' + userId);
                 swal("Usuario eliminado con éxito!", {
                     icon: "success",
                 });
@@ -54,7 +54,7 @@ $(function() {
              text: 'Nuevo usuario',
              className: 'btnNuevoUsuario',
              action: function ( e, dt, node, config ) {
-                 window.location.href = '/admin/usuario/nuevo';
+                 window.location.href = '/admin/usuarios/nuevo';
              }
         };
 

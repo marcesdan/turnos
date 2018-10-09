@@ -3,7 +3,7 @@
 
 <div class="app-title">
   <div>
-    <h1><i class="fa fa-plus text-primary"></i> Nuevo paciente</h1>
+    <h1><i class="fa fa-plus-square text-primary"></i> Nuevo paciente</h1>
     <p>Alta de pacientes en el sistema</p>
   </div>
   <ul class="app-breadcrumb breadcrumb">

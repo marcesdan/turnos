@@ -2,12 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Especialidad;
-use Log;
+use App\Services\MedicoService;
+use App\Http\Requests\MedicoRequest;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
+/**
+ * Class MedicoController
+ * @package App\Http\Controllers
+ */
 class MedicoController extends Controller
 {
+    use RegistersUsers;
+    use SendsPasswordResetEmails;
+
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/admin/medicos';
+
+    /**
+     * @var MedicoService
+     */
+    protected $medicoService;
+
+    /**
+     * MedicoController constructor.
+     * @param MedicoService $medicoService
+     */
+    public function __construct(MedicoService $medicoService)
+    {
+        $this->medicoService = $medicoService;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param MedicoRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(MedicoRequest $request)
+    {
+        $input = $request->validated();
+        $medico = $this->medicoService->register($input);
+        event(new Registered($medico->user));
+        $this->sendResetLinkEmail($request);
+        return redirect($this->redirectPath());
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +60,8 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        //
+        $medicos = $this->medicoService->findAll();
+        return view('medico.index', ['medicos' => $medicos]);
     }
 
     /**
@@ -25,24 +71,14 @@ class MedicoController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $especialidades = $this->medicoService->findAllEspecialidades();
+        return view('medico.create', ['especialidades' => $especialidades]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,49 +89,46 @@ class MedicoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $medico = $this->medicoService->find($id);
+        $especialidades = $this->medicoService->findAllEspecialidades();
+
+        return view('medico.edit',[
+                'medico' => $medico,
+                'especialidades' => $especialidades
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\MedicoRequest
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MedicoRequest $request, $id)
     {
-        //
+        $medico = $this->medicoService->find($id);
+        $validatedData = $request->validated();
+        $this->medicoService->update($validatedData, $medico);
+        return redirect('/admin/medicos')->with('status', 'Médico editado con éxito!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Retorna todas las especialidades que brinda el hospital
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getEspecialidades($especialidad)
-    {
-        Log::debug('iniciando debug');
-        Log::debug($especialidad);
-        
-        return response()->json([
-            'data' => Especialidad::where('nombre', $especialidad)->get()
-        ], 200);
+        $medico = $this->medicoService->find($id);
+        $this->medicoService->destroy($medico);
+        return response()->json(200);
     }
 }
