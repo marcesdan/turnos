@@ -16,20 +16,21 @@ class CrearTablaTurno extends Migration
         Schema::create('turno', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('fecha');
-            $table->boolean('reservado');
-            $table->boolean('confirmado');
+            $table->datetime('reservado')->nullable();
+            $table->datetime('confirmado')->nullable();
+            $table->datetime('finalizado')->nullable();
             $table->unsignedInteger('paciente_id')->nullable();
-            $table->unsignedInteger('medico_id');
+            $table->unsignedInteger('medico_id')->nullable();
 
             $table->foreign('paciente_id')
                 ->references('id')
                 ->on('paciente')
-                ->onDelete('cascade')
+                ->onDelete('set null')
                 ->onUpdate('cascade');
             $table->foreign('medico_id')
                 ->references('id')
                 ->on('medico')
-                ->onDelete('cascade')
+                ->onDelete('set null')
                 ->onUpdate('cascade');
 
             $table->timestamps();

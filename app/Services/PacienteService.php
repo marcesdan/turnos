@@ -46,7 +46,7 @@ class PacienteService
      * @param $input
      */
     public function store($input) {
-        Paciente::create($input);
+        return Paciente::create($input);
     }
 
     /** Actualiza al paciente
@@ -57,6 +57,7 @@ class PacienteService
     {
         $paciente->fill($input);
         $paciente->save();
+        return $paciente;
     }
 
     /** Elimina el paciente dado

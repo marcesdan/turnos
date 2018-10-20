@@ -46,38 +46,65 @@
                 @endif
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label">Email</label>
-              <input name="email" type="email" placeholder="Ingrese la dirección email"
-              class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
-              value="{{ old('email') }}" 
-              required autocomplete>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="control-label">Email</label>
+                <input name="email" type="email" placeholder="Ingrese la dirección email"
+                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                value="{{ old('email') }}" 
+                required autocomplete>
 
-              @if ($errors->has('email'))
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+              </div> 
+              <div class="form-group col-md-6">
+                <label class="control-label">Teléfono</label>
+                <input name="telefono" type="tel" placeholder="Ingrese un número de teléfono"
+                class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }}" 
+                value="{{ old('telefono') }}" 
+                required autocomplete>
+
+                @if ($errors->has('telefono'))
                   <span class="invalid-feedback" role="alert">
-                      <strong>{{ $errors->first('email') }}</strong>
+                      <strong>{{ $errors->first('telefono') }}</strong>
                   </span>
-              @endif
-            </div>
+                @endif
+              </div> 
+            </div> <!-- form row -->
 
-            <div class="form-group">
+            <div class="form-group {{ $errors->has('especialidad') ? ' is-invalid' : '' }}">
               <label for="especialidad">Especialidad</label>
+
               <select class="form-control" id="especialidad" name="especialidad" required>
+                <option></option>
                 @foreach ($especialidades as $especialidad)
                   <option value="{{ $especialidad->nombre }}">{{ $especialidad->nombre }}</option>
                 @endforeach
+                @if (old('especialidad'))
+                  <option value="{{ old('especialidad') }}" selected> {{ old('especialidad') }} </option>
+                @endif
               </select>
 
               <!--En caso de querer crear una nueva especialidad -->
               <input name="especialidad" id="nueva-especialidad" type="text" placeholder="Nueva especialidad"
               class="d-none form-control{{ $errors->has('especialidad') ? ' is-invalid' : '' }}" 
-              value="{{ old('especialidad') }}">
+              value="{{ old('especialidad') }}" disabled>
+
+              @if ($errors->has('especialidad'))
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('especialidad') }}</strong>
+                </span>
+              @endif
               <!--"tipo toogle"-->
               <p class="semibold-text text-right mt-2">
                 <a href="#" id="crear-nueva-especialidad">Crear nueva especialidad</a>
               </p>
 
-            </div>
+            </div> <!-- form-group -->
+            
         </div> <!-- tile-body -->
         <div class="tile-footer text-center">
           <button class="btn btn-primary" type="submit">
@@ -91,4 +118,6 @@
     </form>
   </div> <!-- col -->
 </div> <!-- row -->
+@endsection
+@section('scripts')
 @endsection

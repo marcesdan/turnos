@@ -18,6 +18,7 @@ class PacienteTableSeeder extends Seeder
             'nombre' => 'Mariano César',
             'apellido' => "D'Angelo",
             'email' => 'marianod93@gmail.com',
+            'telefono' => '2901-606964',
             'documento' => '37533200'
         ]);
     }

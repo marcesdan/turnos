@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MedicoRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,13 +24,12 @@ class MedicoRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->request->get('user_id');
         return [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'email' => [
-                'required','string','max:255','email',
-                'unique:user,email,'.$this->route('id') ?? 0
-            ],
+            'telefono' => 'required|string|max:255',
+            'email' => 'required|email|unique:user,email,'.$id,
             'especialidad' => 'required|string|max:255',
         ];
     }

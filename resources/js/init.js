@@ -10,17 +10,18 @@ import pace from 'pace-js';
 pace.start();
 
 try {
-	window.Popper = require('popper.js').default;
+    window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
-    require('./vendor/bootstrap');  
-	require( 'datatables.net-bs4' )
-	require( 'datatables.net-buttons-bs4')
-	require('sweetalert');
-	require('select2');
-	require('bootstrap-notify');
-	require('fullcalendar');
-	window.moment = require('moment');
-} catch (e) {}
+    require('./vendor/bootstrap');
+    require('datatables.net-bs4');
+    require('datatables.net-buttons-bs4');
+    require('sweetalert');
+    require('select2');
+    require('bootstrap-notify');
+    require('fullcalendar');
+    window.moment = require('moment');
+} catch (e) {
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

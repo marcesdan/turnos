@@ -24,14 +24,14 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->request->get('id');
         return [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'email' => [
-                'required','string','max:255','email',
-                'unique:user,email,'.$this->route('id') ?? 0
-            ],
+            'telefono' => 'required|string|max:255',
+            'email' => 'required|email|unique:user,email,'.$id,
             'rol' => [
+                'sometimes','required',
                 Rule::in([
                     'Administrador',
                     'Recepcionista'

@@ -13,7 +13,7 @@
 </div>
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form method="post" action="/paciente/{{$paciente->id}}">
+    <form method="post" action="/pacientes/{{$paciente->id}}">
       <div class="tile">
         <h3 class="tile-title">Datos del paciente</h3>
         <div class="tile-body">
@@ -85,7 +85,7 @@
           </div> <!-- form-row -->
         </div> <!-- tile-body -->
         <div class="tile-footer text-center">
-          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="/paciente"><i class="fa fa-fw fa-lg fa-times-circle"></i>Volver</a>
+          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="/pacientes"><i class="fa fa-fw fa-lg fa-times-circle"></i>Volver</a>
         </div>
       </div> <!-- tile -->
     </form>

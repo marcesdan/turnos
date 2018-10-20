@@ -48,11 +48,15 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::view('/turnos', 'turnos.turnos');
+    Route::group(['middleware' => 'can:medico'], function () {
+        Route::view('/turno', 'turno.turno');
+        Route::get('/api/turno', 'Api\TurnoController@misTurnosActuales');
+        Route::post('/api/turno', 'Api\TurnoController@store');
+    });
+
 
     Route::prefix('atencion')->group(function () {
-        Route::group(['middleware' => 'can:medico'], function () {
-        });
+
     });
 
     Route::group(['middleware' => 'can:recepcionista'], function () {
@@ -64,8 +68,18 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('{id}/editar', 'PacienteController@edit');
             Route::put('{id}', 'PacienteController@update');
             Route::delete('{id}', 'PacienteController@destroy');
+
+            Route::get('{id}/turnos/nuevo', 'TurnoController@create');
+            Route::get('turnos/nuevo', 'TurnoController@create');
         });
     });
+
+    Route::get('/perfil', 'ProfileController@edit');
+    Route::put('/perfil-medico', 'ProfileController@updateMedico');
+    Route::put('/perfil-user', 'ProfileController@updateUser');
+
+    Route::get('password/change', 'Auth\ChangePasswordController@showChangePasswordForm');
+    Route::put('password/change', 'Auth\ChangePasswordController@changePassword');
 
     Route::view('/', 'welcome');
 });

@@ -8,13 +8,13 @@
   </div>
   <ul class="app-breadcrumb breadcrumb">
       <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="/paciente">pacientes</a></li>
+      <li class="breadcrumb-item"><a href="/pacientes">pacientes</a></li>
       <li class="breadcrumb-item"><a href="#">Nuevo paciente</a></li>
   </ul>
 </div>
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form method="post" action="/paciente">
+    <form method="post" action="/pacientes">
       <div class="tile">
         <h3 class="tile-title">Datos del paciente</h3>
         <div class="tile-body">
@@ -85,7 +85,7 @@
             </div> <!-- form-row-->
         </div> <!-- tile-body -->
         <div class="tile-footer text-center">
-          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="/paciente"><i class="fa fa-fw fa-lg fa-times-circle"></i>Volver</a>
+          <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Guardar</button>&nbsp;&nbsp;&nbsp;<a class="btn btn-secondary" href="/pacientes"><i class="fa fa-fw fa-lg fa-times-circle"></i>Volver</a>
         </div>
       </div> <!-- tile -->
     </form>

@@ -26,7 +26,7 @@ class CrearTablaMedico extends Migration
             $table->foreign('especialidad_id')
                 ->references('id')
                 ->on('especialidad')
-                ->onDelete('cascade')
+                ->onDelete('restrict')
                 ->onUpdate('cascade');
                 
             $table->timestamps();

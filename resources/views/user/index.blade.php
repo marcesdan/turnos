@@ -21,6 +21,7 @@
                 <th>Apellido</th>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Teléfono</th>
                 <th>Rol</th>
                 <th>Creado</th>
                 <th>Acciones</th>
@@ -33,6 +34,7 @@
                 <td>{{ $user->apellido }}</td>
                 <td>{{ $user->nombre }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->telefono }}</td>
                 <td>{{ $user->role->nombre }}</td>
                 <td>
                 <span class="user-created-at" data-date="{{ $user->created_at }}"></span>
@@ -40,8 +42,8 @@
                 <td>
                   <div class="wrapper text-center">
                     <div class="btn-group btn-group-sm display-1">
-                      <a href="/admin/usuario/{{{ $user->id }}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                      <a href="/admin/usuario/{{{ $user->id }}}/editar" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                      <a href="/admin/usuarios/{{ $user->id }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                      <a href="/admin/usuarios/{{ $user->id }}/editar" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                       <a href="#" class="btn btn-primary btn-delete" id="btn-user-delete"
                           data-info="{{$user->id}},{{$user->nombre}},{{$user->apellido}}">
                           <i class="fa fa-trash"></i>

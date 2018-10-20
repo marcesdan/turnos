@@ -7,6 +7,7 @@ use App\Http\Requests\MedicoRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 
 /**
  * Class MedicoController
@@ -97,16 +98,16 @@ class MedicoController extends Controller
         $medico = $this->medicoService->find($id);
         $especialidades = $this->medicoService->findAllEspecialidades();
 
-        return view('medico.edit',[
-                'medico' => $medico,
-                'especialidades' => $especialidades
-            ]);
+        return view('medico.edit', [
+            'medico' => $medico,
+            'especialidades' => $especialidades
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\MedicoRequest
+     * @param MedicoRequest $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */

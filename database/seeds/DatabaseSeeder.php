@@ -17,6 +17,6 @@ class DatabaseSeeder extends Seeder
         //$this->call(EspecialidadTableSeeder::class);
         $this->call(MedicoTableSeeder::class);
         $this->call(PacienteTableSeeder::class);
-        $this->call(TurnoTableSeeder::class);
+        //$this->call(TurnoTableSeeder::class);
     }
 }

@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('medico', function ($user) {
             return
-                $user->can('admin') || $user->role->nombre == 'Médico';
+                $user->role->nombre == 'Médico';
         });
         Gate::define('recepcionista', function ($user) {
             return

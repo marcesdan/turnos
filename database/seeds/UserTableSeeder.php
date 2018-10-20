@@ -18,6 +18,7 @@ class UserTableSeeder extends Seeder
         $role_recepcionista = Role::where('nombre','Recepcionista')->first();
         $role_medico = Role::where('nombre', 'Médico')->first();
 
+        /*
         // creamos 10 recepcionistas
     	factory(User::class, 10)
             ->create()
@@ -25,12 +26,14 @@ class UserTableSeeder extends Seeder
                 $u->role()->associate($role_recepcionista);
                 $u->save();
             });
+        */
 
         // me creo como administrador
         User::create([
             'nombre' => 'Mariano César',
             'apellido' => "D'Angelo",
             'email' => 'marianod93@gmail.com',
+            'telefono' => '2901-606964',
             'role_id' => $role_administrador->id,
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm' //secret
         ]);
@@ -40,16 +43,8 @@ class UserTableSeeder extends Seeder
             'nombre' => 'Mariano César',
             'apellido' => "D'Angelo",
             'email' => 'marcesdan@gmail.com',
+            'telefono' => '2901-606964',
             'role_id' => $role_administrador->id,
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm' //secret
-        ]);
-
-        // me creo como médico
-        User::create([
-            'nombre' => 'Mariano César',
-            'apellido' => "D'Angelo",
-            'email' => 'marianod_93@hotmail.com',
-            'role_id' => $role_medico->id,
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm' //secret
         ]);
 
@@ -58,6 +53,7 @@ class UserTableSeeder extends Seeder
             'nombre' => 'Mariano César',
             'apellido' => "D'Angelo",
             'email' => 'marianodeush@hotmail.com',
+            'telefono' => '2901-606964',
             'role_id' => $role_recepcionista->id,
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm' //secret
         ]);

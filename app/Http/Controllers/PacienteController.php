@@ -58,7 +58,7 @@ class PacienteController extends Controller
     {
         $validatedData = $request->validated();
         $this->pacienteService->store($validatedData);
-        return redirect('/paciente')->with('status', 'Paciente creado con éxito!');
+        return redirect('/pacientes')->with('status', 'Paciente creado con éxito!');
     }
 
 
@@ -81,13 +81,12 @@ class PacienteController extends Controller
      * @param  int $documento
      * @return \Illuminate\Http\Response
      */
-    public function update(PacienteRequest $request, $documento)
+    public function update(PacienteRequest $request, $id)
     {
-        $paciente = $this->pacienteService->findByDocumento($documento);
-
+        $paciente = $this->pacienteService->find($id);
         $validatedData = $request->validated();
         $this->pacienteService->update($validatedData, $paciente);
-        return redirect('/paciente')->with('status', 'Paciente editado con éxito!');
+        return redirect('/pacientes')->with('status', 'Paciente editado con éxito!');
     }
 
     /**

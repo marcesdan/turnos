@@ -7,7 +7,7 @@ $factory->define(App\Paciente::class, function (Faker $faker) {
         'nombre' => $faker->firstName,
         'apellido' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'telefono' => $faker->phoneNumber,
+        'telefono' => '2901-600000',
         'documento' => $faker->numberBetween($min = 1000000, $max = 99999999),
     ];
 });

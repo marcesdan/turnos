@@ -21,6 +21,7 @@
                 <th>Apellido</th>
                 <th>Nombre</th>
                 <th>Email</th>
+                <th>Teléfono</th>
                 <th>Especialidad</th>
                 <th>Creado</th>
                 <th>Acciones</th>
@@ -33,6 +34,7 @@
                 <td>{{ $medico->user->apellido }}</td>
                 <td>{{ $medico->user->nombre }}</td>
                 <td>{{ $medico->user->email }}</td>
+                <td>{{ $medico->user->telefono }}</td>
                 <td>{{ $medico->especialidad->nombre }}</td>
                 <td>
                 <span class="medico-created-at" data-date="{{ $medico->user->created_at }}"></span>
@@ -40,8 +42,8 @@
                 <td>
                   <div class="wrapper text-center">
                     <div class="btn-group btn-group-sm display-1">
-                      <a href="/admin/medicos/{{{ $medico->id }}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                      <a href="/admin/medicos/{{{ $medico->id }}}/editar" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                      <a href="/admin/medicos/{{ $medico->id }}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
+                      <a href="/admin/medicos/{{ $medico->id }}/editar" class="btn btn-primary"><i class="fa fa-edit"></i></a>
                       <a href="#" class="btn btn-primary btn-delete" id="btn-medico-delete"
                           data-info="{{$medico->id}},{{$medico->user->nombre}},{{$medico->user->apellido}}">
                           <i class="fa fa-trash"></i>

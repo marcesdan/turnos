@@ -55,11 +55,8 @@ class MedicoService
         $user = $this->userService->createUser($input, 'Médico');
         //se crea al médico y se asocia al usuario
         $medico = new Medico();
-        $medico->user()->associate($user);
-        //se da la posibilidad de crear una nueva especialidad en caso de que no exista la dada
-        $medico->especialidad()->associate(
-            Especialidad::firstOrCreate(['nombre' => $input['especialidad']])
-        );
+        $medico->setUser($user);
+        $medico->setEspecialidad($input['especialidad']);
         $medico->save();
         return $medico;
     }
@@ -72,9 +69,7 @@ class MedicoService
     public function update($input, Medico $medico)
     {
         $this->userService->update($input, $medico->user);
-        $medico->especialidad()->associate(
-            Especialidad::firstOrCreate(['nombre' => $input['especialidad']])
-        );
+        $medico->setEspecialidad($input['especialidad']);
         $medico->save();
         return $medico;
     }

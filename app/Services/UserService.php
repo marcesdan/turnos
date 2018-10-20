@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-use App\Role;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -55,11 +54,10 @@ class UserService
     public function createUser($input, $rol)
     {
         //se crea al usuario
-        $role = Role::where('nombre', $rol)->first();
         $user = new User();
         $user->fill($input);
         $user->password = Hash::make(str_random(8));
-        $user->role()->associate($role);
+        $user->setRole($rol);
         $user->save();
         return $user;
     }
@@ -72,6 +70,11 @@ class UserService
     public function update($input, User $user)
     {
         $user->fill($input);
+
+        // si está presente en el array y es un nuevo rol...
+        if ( array_has($input, 'rol') )
+            $user->setRole($input['rol']);
+
         $user->save();
         return $user;
     }

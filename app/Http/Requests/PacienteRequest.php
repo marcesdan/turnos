@@ -28,11 +28,12 @@ class PacienteRequest extends FormRequest
             'apellido' => 'required|string|max:255',
             'documento' => [
                 'required',
-                'unique:paciente,documento,'.$this->route('documento') ?? 0
+                'unique:paciente,documento,'.$this->route('id') ?? 0
             ],
             'email' => [
                 'required','string','max:255','email',
             ],
+            'telefono' => 'required|string|max:255',
         ];
     }
 }

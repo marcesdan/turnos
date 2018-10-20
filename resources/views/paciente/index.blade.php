@@ -40,8 +40,9 @@
                   <td>
                     <div class="wrapper text-center">
                       <div class="btn-group btn-group-sm display-1">
-                        <a href="/paciente/{{{ $paciente->id }}}" class="btn btn-primary"><i class="fa fa-eye"></i></a>
-                        <a href="/paciente/{{{ $paciente->id }}}/editar" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+                          <a href="/pacientes/{{ $paciente->id }}/turnos/nuevo" class="btn btn-primary"><i class="fa fa-calendar fa-lg"></i></a>
+                        <a href="/pacientes/{{ $paciente->id }}/editar" class="btn btn-primary"><i class="fa fa-edit"></i></a>
+
                         <a href="#" class="btn btn-primary" id="btn-paciente-delete"
                         data-info="{{$paciente->id}},{{$paciente->nombre}},{{$paciente->apellido}}">
                           <i class="fa fa-trash"></i>

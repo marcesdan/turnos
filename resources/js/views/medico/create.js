@@ -1,6 +1,12 @@
 $(function() {
+	 // valores comunes a los selects2
+    let selectEspecialidadOptions = { 
+      width: '100%',
+      placeholder: 'Especialidad',
+      allowClear: true,
+    };
+    $('#especialidad').select2(selectEspecialidadOptions);   
 
-	
 	let nuevaEspecialidad = false;
 	// es como un "toggle"
 	$('#crear-nueva-especialidad').on('click', function(event) {
@@ -14,7 +20,8 @@ $(function() {
 			// aparece un campo de texto donde irá la nueva especialidad y es "requerido"
 			$('#nueva-especialidad')
 				.removeClass('d-none')
-				.attr("required", true);
+				.attr("required", true)
+				.prop('disabled', false);
 			$(this).text('Asignar especialidad ya existente');	
 			nuevaEspecialidad = true;
 		} else {
@@ -25,7 +32,8 @@ $(function() {
 			$('#especialidad').attr('required', true);
 			$('#nueva-especialidad')
 				.addClass('d-none')
-				.attr("required", false);
+				.attr("required", false)
+				.prop('disabled', true);
 			$(this).text('Crear nueva especialidad');	
 			nuevaEspecialidad = false;
 		}

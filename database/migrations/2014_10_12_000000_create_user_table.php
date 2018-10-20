@@ -18,13 +18,14 @@ class CreateUserTable extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->string('email')->unique();
+            $table->string('telefono');
             $table->string('password');
             $table->rememberToken();
             $table->unsignedInteger('role_id')->nullable();
             $table->foreign('role_id')
                 ->references('id')
                 ->on('role')
-                ->onDelete('cascade')
+                ->onDelete('restrict')
                 ->onUpdate('cascade');
             $table->timestamps();
         });

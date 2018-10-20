@@ -4,6 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed nombre
+ * @property mixed apellido
+ * @property mixed email
+ * @property mixed documento
+ * @property mixed telefono
+ * @property mixed turno
+ */
 class Paciente extends Model
 {
 
@@ -19,10 +27,20 @@ class Paciente extends Model
     ];
 
     /**
-     * Devuelve todos los turnos reservados por este paciente
+     * Devuelve todos los turno reservados por este paciente
      */
     public function turnos()
     {
         return $this->hasMany('App\Turno');
+    }
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->nombre} {$this->apellido}";
     }
 }

@@ -20,62 +20,71 @@
         <div class="tile-body">
             @csrf
             @method('PUT')
-            <div class="form-group">
-              <label class="control-label">Nombre</label>
-
-              <input name="nombre" type="text" placeholder="Ingrese el o los nombres"
-              class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" 
-              value="{{ (old('nombre')) ? old('nombre') : $user->nombre }}"
-              required autofocus autocomplete>
-
-              @if ($errors->has('nombre'))
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('nombre') }}</strong>
-                </span>
-              @endif
-
-            </div>
-
-            <div class="form-group">
-              <label class="control-label">Apellido</label>
-
-              <input name="apellido" type="text" placeholder="Ingrese el o los apellidos"
-              class="form-control{{ $errors->has('apellido') ? ' is-invalid' : '' }}" 
-              value="{{ (old('apellido')) ? old('apellido') : $user->apellido}}"
-              required autocomplete>
-
-              @if ($errors->has('apellido'))
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="control-label">Nombre</label>
+                <input name="nombre" type="text" placeholder="Ingrese el o los nombres"
+                class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" 
+                value="{{ (old('nombre')) ? old('nombre') : $user->nombre }}"
+                required autofocus autocomplete>
+                @if ($errors->has('nombre'))
                   <span class="invalid-feedback" role="alert">
-                      <strong>{{ $errors->first('apellido') }}</strong>
+                      <strong>{{ $errors->first('nombre') }}</strong>
                   </span>
-              @endif
-            </div>
+                @endif
+              </div> <!--form-group-->
+              <div class="form-group col-md-6">
+                <label class="control-label">Apellido</label>
+                <input name="apellido" type="text" placeholder="Ingrese el o los apellidos"
+                class="form-control{{ $errors->has('apellido') ? ' is-invalid' : '' }}" 
+                value="{{ (old('apellido')) ? old('apellido') : $user->apellido}}"
+                required autocomplete>
+                @if ($errors->has('apellido'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('apellido') }}</strong>
+                    </span>
+                @endif
+              </div> <!--form-group-->
+            </div> <!--form-row-->
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="control-label">Email</label>
+                <input name="email" type="email" placeholder="Ingrese la dirección email"
+                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                value="{{ (old('email')) ? old('email') : $user->email }}"
+                required autocomplete>
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+              </div> <!--form-group-->
+              <div class="form-group col-md-6">
+                <label class="control-label">Teléfono</label>
+                <input name="telefono" type="tel" placeholder="Ingrese un número de teléfono"
+                class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }}" 
+                value="{{ (old('telefono')) ? old('telefono') : $user->telefono }}"
+                required autocomplete>
+                @if ($errors->has('telefono'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('telefono') }}</strong>
+                    </span>
+                @endif
+              </div> <!--form-group--> 
+            </div> <!--form-row-->
             <div class="form-group">
-              <label class="control-label">Email</label>
-
-              <input name="email" type="email" placeholder="Ingrese la dirección email"
-              class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
-              value="{{ (old('email')) ? old('email') : $user->email }}"
-              required autocomplete>
-
-              @if ($errors->has('email'))
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $errors->first('email') }}</strong>
-                  </span>
-              @endif
-            </div>
-
-            <div class="form-group">
-                <label for="rol">Rol</label>
-                <select class="form-control" id="rol" name="rol">
-                    <option value="Administrador">Administrador</option>
-                    <option value="Recepcionista">Recepcionista</option>
-                    <option value="{{ old("rol") ?: $user->role->nombre }}" selected>
-                        {{ old("rol") ?: $user->role->nombre }}
-                    </option>
-                </select>
-            </div>
-
+              <label for="rol">Rol</label>
+              <select class="form-control" id="rol" name="rol">
+                  <option value="Administrador" 
+                  {{ (old("rol") ?: $user->role->nombre) == 'Administrador' ? "selected": "" }}>
+                    Administrador
+                  </option>
+                  <option value="Recepcionista" 
+                  {{ (old("rol") ?: $user->role->nombre) == 'Recepcionista' ? "selected" : "" }}>
+                    Recepcionista
+                   </option>
+              </select>
+            </div> <!--form-group--> 
         </div> <!-- tile-body -->
         <div class="tile-footer text-center">
           <button class="btn btn-primary" type="submit">

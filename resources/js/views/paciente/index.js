@@ -25,7 +25,7 @@ $(function() {
         })
         .then((willDelete) => {
             if (willDelete) {  
-                axios.delete('/paciente/' + pacienteId);
+                axios.delete('/pacientes/' + pacienteId);
                 swal("Paciente eliminado con éxito!", {
                     icon: "success",
                 });
@@ -53,7 +53,7 @@ $(function() {
            text: 'Nuevo paciente',
            className: 'btnNuevoPaciente',
            action: function ( e, dt, node, config ) {
-               window.location.href = '/paciente/nuevo';
+               window.location.href = '/pacientes/nuevo';
            }
        };
 

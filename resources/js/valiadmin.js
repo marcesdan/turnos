@@ -1,13 +1,6 @@
-(function () {
-	"use strict";
+$(function() {
 	
-	var treeviewMenu = $('.app-menu');
-
-	// Login Page Flipbox control
-	$('.login-content [data-toggle="flip"]').click(function() {
-		$('.login-box').toggleClass('flipped');
-		//return false;
-	});
+	let treeviewMenu = $('.app-menu');
 
 	// Toggle Sidebar
 	$('[data-toggle="sidebar"]').click(function(event) {
@@ -30,4 +23,4 @@
 	//Activate bootstrip tooltips
 	$("[data-toggle='tooltip']").tooltip();
 
-})();
+});

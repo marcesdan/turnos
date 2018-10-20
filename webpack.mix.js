@@ -11,26 +11,35 @@ const mix = require('laravel-mix');
  |
  */
 
- /*
+/*
 .extract([
-	    'jquery', 
-	 ])
-	.autoload({
-        jquery: ['$', 'window.jQuery', 'jQuery', 'jquery']
-    })
+       'jquery',
+    ])
+   .autoload({
+       jquery: ['$', 'window.jQuery', 'jQuery', 'jquery']
+   })
 
- */
+*/
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css') 
-   .version()
-   .sourceMaps()
-   .browserSync({
-	    proxy: 'turnos.test',
-	    files: [
-	        'app/**/*.php',
-	        'resources/views/**/*.php',
-	        'public/js/**/*.js',
-	        'public/css/**/*.css'
-	    ]
-});
+    .extract([
+        'jquery',
+    ])
+    .autoload({
+        jquery: ['$', 'window.jQuery', 'jQuery', 'jquery']
+    })
+    .sass('resources/sass/app.scss', 'public/css')
+    .version()
+    .sourceMaps()
+    .browserSync({
+        proxy: 'turno.test',
+        files: [
+            'app/**/*.php',
+            'resources/views/**/*.php',
+            'public/js/**/*.js',
+            'public/css/**/*.css'
+        ]
+    });
+
+
+

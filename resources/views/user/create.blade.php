@@ -46,19 +46,36 @@
                 @endif
               </div>
             </div>
-            <div class="form-group">
-              <label class="control-label">Email</label>
-              <input name="email" type="email" placeholder="Ingrese la dirección email"
-              class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
-              value="{{ old('email') }}" 
-              required autocomplete>
 
-              @if ($errors->has('email'))
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="control-label">Email</label>
+                <input name="email" type="email" placeholder="Ingrese la dirección email"
+                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                value="{{ old('email') }}" 
+                required autocomplete>
+
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Teléfono</label>
+                <input name="telefono" type="tel" placeholder="Ingrese un número telefónico"
+                class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }}" 
+                value="{{ old('telefono') }}" 
+                required autocomplete>
+
+                @if ($errors->has('telefono'))
                   <span class="invalid-feedback" role="alert">
-                      <strong>{{ $errors->first('email') }}</strong>
+                      <strong>{{ $errors->first('telefono') }}</strong>
                   </span>
-              @endif
-            </div>
+                @endif
+              </div> 
+            </div> <!-- form row -->
+
             <div class="form-group">
               <label for="rol">Rol</label>
               <select class="form-control" id="rol" name="rol">

@@ -7,10 +7,13 @@
 
 require('./init');
 require('./valiadmin');
-require('./user/index');
-require('./medico/index');
-require('./medico/create');
-require('./paciente/index');
+require('./views/user/index');
+require('./views/medico/index');
+require('./views/medico/create');
+require('./views/paciente/index');
+require('./views/turno/index');
+require('./views/turno/create');
+
 
 
 //window.Vue = require('vue');
