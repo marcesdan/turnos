@@ -14,7 +14,7 @@
 </div>
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form method="post" action="/admin/medicos">
+    <form method="post" action="/admin/medicos" id="form-medico-create">
       <div class="tile">
         <h3 class="tile-title">Datos del médico</h3>
         <div class="tile-body">

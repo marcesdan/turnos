@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['middleware' => 'can:medico'], function () {
-        Route::view('/turno', 'turno.turno');
+        Route::view('/turnos', 'turno.index');
         Route::get('/api/turno', 'Api\TurnoController@misTurnosActuales');
         Route::post('/api/turno', 'Api\TurnoController@store');
     });

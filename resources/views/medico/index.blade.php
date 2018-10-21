@@ -14,7 +14,7 @@
     <div class="col-md-12">
       <div class="tile">
         <div class="table-responsive">
-          <table id="tabla-medico" class="table table-striped table-bordered table-sm" style="width:100%">
+          <table id="tabla-medico-index" class="table table-striped table-bordered table-sm" style="width:100%">
             <thead>
               <tr>
                 <th>#</th>

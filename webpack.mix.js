@@ -26,11 +26,10 @@ mix.js('resources/js/app.js', 'public/js')
         'jquery',
     ])
     .autoload({
-        jquery: ['$', 'window.jQuery', 'jQuery', 'jquery']
+        jquery: ['$']
     })
     .sass('resources/sass/app.scss', 'public/css')
     .version()
-    .sourceMaps()
     .browserSync({
         proxy: 'turno.test',
         files: [

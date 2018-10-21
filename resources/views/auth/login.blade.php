@@ -21,14 +21,6 @@
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="{{ mix('/js/manifest.js') }}"></script>
 <script src="{{ mix('/js/vendor.js') }}"></script>
-<script type="text/javascript">
-    $(function () {
-        // Login Page Flipbox control
-        $('.login-content [data-toggle="flip"]').click(function () {
-            $('.login-box').toggleClass('flipped');
-            //return false;
-        });
-    });
-</script>
+<script src="{{ mix('/js/app.js') }}"></script>
 </body>
 </html>

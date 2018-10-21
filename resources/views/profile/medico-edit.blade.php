@@ -13,7 +13,7 @@
 </div>
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form method="post" action="/perfil-medico">
+    <form method="post" action="/perfil-medico" id="form-profile-medico">
       <div class="tile">
         <h3 class="tile-title">Mi perfil</h3>
         <div class="tile-body">

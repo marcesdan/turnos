@@ -61,7 +61,7 @@
         </div> <!--form-row -->
       </div> <!-- tile-body -->
       <hr>
-      <div id="calendarDisponibilidad"></div>
+      <div id="calendar-create"></div>
       <div class="tile-footer text-right">
         <a class="btn btn-secondary" href="/pacientes">
           <i class="fa fa-fw fa-lg fa-times-circle"></i>Volver

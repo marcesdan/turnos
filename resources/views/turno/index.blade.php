@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-md-12">
         <div class="tile">
-          <div id="calendar"></div>
+          <div id="calendar-index"></div>
          </div> <!-- tile -->
       </div> <!-- col -->
   </div> <!-- row -->

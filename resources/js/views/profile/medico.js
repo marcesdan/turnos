@@ -25,7 +25,7 @@ function nuevaEspecialidad() {
         if (!nuevaEspecialidad) {
             //se oculta select2 con todas las especialidades y ya no es "requerido"
             selectEspecialidad.next(".select2-container").hide();
-            selectEspecialidad.attr("required", false)
+            selectEspecialidad.attr("required", false);
 
             // aparece un campo de texto donde irá la nueva especialidad y es "requerido"
             inputNuevaEspecialidad.removeClass('d-none').attr("required", true).prop('disabled', false);
