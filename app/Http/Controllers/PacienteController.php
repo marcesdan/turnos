@@ -57,7 +57,7 @@ class PacienteController extends Controller
     public function store(PacienteRequest $request)
     {
         $validatedData = $request->validated();
-        $this->pacienteService->store($validatedData);
+        $this->pacienteService->create($validatedData);
         return redirect('/pacientes')->with('status', 'Paciente creado con éxito!');
     }
 
@@ -78,7 +78,7 @@ class PacienteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\PacienteRequest $request
-     * @param  int $documento
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(PacienteRequest $request, $id)
@@ -94,6 +94,7 @@ class PacienteController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {

@@ -58,7 +58,7 @@ function datatable() {
         }
     };
 
-    let tablaPaciente = $('#tabla-paciente').DataTable({
+    let tablaPaciente = $('#tabla-paciente-index').DataTable({
         "order": [[1, 'asc']],
         "language": {
             "sProcessing": "Procesando...",
@@ -89,7 +89,7 @@ function datatable() {
         buttons: ['nuevo'],
     });
 
-    tablaPaciente.buttons().container().appendTo('#tabla-paciente_wrapper .col-md-6:eq(0)');
+    tablaPaciente.buttons().container().appendTo('#tabla-paciente-index_wrapper .col-md-6:eq(0)');
     $(".btnNuevoPaciente").removeClass("btn-secondary").addClass("btn-primary");
     $('div.dataTables_filter input').focus()
 }

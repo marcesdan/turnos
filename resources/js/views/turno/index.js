@@ -1,21 +1,15 @@
 import moment from "moment";
 import swal from "sweetalert";
 import {turnoService} from "../../services/turnoService";
+let calendar = $("#calendar-index");
 
 const init = () => {
-    calendar();
+    initCalendar();
     planificar();
 };
 export {init}
 
-async function calendar() {
-    let events = [];
-    await turnoService.misTurnosActuales().then(
-        data => events = data,
-        error => {
-        }
-    );
-    let misTurnos = $('#calendar-index');
+function initCalendar() {
     let customButtons = {
         planificacionBtn: {
             text: 'Planificación',
@@ -31,11 +25,11 @@ async function calendar() {
     };
     let businessHours = {
         // days of week. an array of zero-based day of week integers (0=Sunday)
-        dow: [1, 2, 3, 4], // Monday - Thursday
+        dow: [1, 2, 3, 4, 5], // Monday - Thursday
         start: '09:00', // a start time (10am in this example)
         end: '18:00', // an end time (6pm in this example)
     };
-    misTurnos.fullCalendar({
+    calendar.fullCalendar({
         themeSystem: 'bootstrap4',
         customButtons: customButtons,
         header: header,
@@ -49,8 +43,12 @@ async function calendar() {
         forceEventDuration: true,
         slotDuration: '00:15:00',
         defaultTimedEventDuration: '00:30:00',
-        events: events
-    })
+    });
+
+    turnoService.getMisTurnosActuales().then(
+        data => refreshCalendar(data),
+        error => {}
+    );
 }
 
 function planificar() {
@@ -81,5 +79,5 @@ function planificar() {
 }
 
 function refreshCalendar(events) {
-    $("#calendar").fullCalendar('addEventSource', events);
+    calendar.fullCalendar('addEventSource', events);
 }

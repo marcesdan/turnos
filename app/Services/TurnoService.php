@@ -8,29 +8,74 @@
 
 namespace App\Services;
 
+use App\Especialidad;
 use App\Medico;
+use App\Paciente;
 use App\Turno;
 use Carbon\Carbon;
 
 class TurnoService
 {
-    protected $medicoService;
 
-    public function __construct(MedicoService $medicoService)
+    /**
+     * @param $id
+     * @return Turno
+     */
+    public function find($id)
     {
-        $this->medicoService = $medicoService;
+        return Turno::findOrFail($id);
     }
 
     /**
-     * Retorna todos los turno que aun no han sido atendidos, ni confirmados, ni reservados
+     * Retorna todos los turnos
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findAll()
+    {
+        return Turno::all();
+    }
+
+    /**
+     * Retorna todos los turnos que aun no han sido atendidos, ni confirmados, ni reservados
      * @param Medico $medico
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getTurnosActuales(Medico $medico)
+    public function getMisTurnosActuales(Medico $medico)
     {
         return $medico->turnos()
             ->whereNull('finalizado')
             ->where('fecha', '>=', Carbon::today())
+            ->get();
+    }
+
+    /**
+     * Retorna los turnos que están próximos a ocurrir.
+     * Proximidad establecida de una hora por defecto.
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTurnosSinConfirmar()
+    {
+        $desde = Carbon::now()->subMinutes(25);
+        $hasta = Carbon::now()->addHour();
+        return Turno::whereNull('finalizado')
+            ->whereNotNull('reservado')
+            ->whereNull('confirmado')
+            ->whereBetween('fecha', [$desde, $hasta])
+            ->get();
+    }
+
+    /**
+     * Retorna los turnos que están que ya han sido confirmados.
+     * Lo cual significa que el médico ya puede atenderlos
+     * @param Medico $medico
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getMisTurnosConfirmados(Medico $medico)
+    {
+        return $medico->turnos()
+            ->whereNull('finalizado')
+            ->whereNotNull('reservado')
+            ->whereNotNull('confirmado')
             ->get();
     }
 
@@ -48,7 +93,7 @@ class TurnoService
     }
 
     /**
-     * Retorna los turno del dia de hoy que quedan por atender
+     * Retorna los turnos del dia de hoy que quedan por atender
      * @param Medico $medico
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -62,6 +107,64 @@ class TurnoService
     }
 
     /**
+     * Retorna los turnos disponibles de un médico dado
+     * @param Medico $medico
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function buscarPorMedico(Medico $medico)
+    {
+        return $medico->turnos()
+            ->whereNull('reservado')
+            ->where('fecha', '>', Carbon::now()->addHour())
+            ->get();
+    }
+
+    /**
+     * Retorna los turnos disponibles de una especialidad dada
+     * @param Especialidad $especialidad
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function buscarPorEspecialidad(Especialidad $especialidad)
+    {
+        // nos quedamos con los ids de todos los médicos de una especialidad
+        $medicos = $especialidad->medicos
+            ->pluck('id')
+            ->all();
+
+        return Turno::whereNull('reservado')
+            ->where('fecha', '>', Carbon::now()->addHour())
+            ->whereIn('medico_id', $medicos)->get();
+    }
+
+    public function reservarTurno(Turno $turno, Paciente $paciente)
+    {
+        $turno->reservarTurno($paciente);
+        $turno->save();
+    }
+
+    public function confirmarTurno($turnoId)
+    {
+        $turno = $this->find($turnoId);
+        $turno->confirmado = Carbon::now();
+        $turno->save();
+    }
+
+    public function cancelarTurno($turnoId)
+    {
+        $turno = $this->find($turnoId);
+        $turno->reservado = null;
+        $turno->save();
+    }
+
+    public function finalizarTurno($turnoId)
+    {
+        $turno = $this->find($turnoId);
+        $turno->finalizado = Carbon::now();
+        $turno->save();
+    }
+
+
+    /**
      * Planifica un conjunto de turno para una semana, determinado por:
      * Los días de la semana que tendrán turos
      * La hora desde que comienzan los turno (primer turno)
@@ -71,7 +174,7 @@ class TurnoService
      * @param Medico $medico
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function planificarSemana($input, Medico $medico)
+    public function planificarHorarios($input, Medico $medico)
     {
         $hora_desde = Carbon::createFromTimeString($input['hora_desde']);
         $hora_hasta = Carbon::createFromTimeString($input['hora_hasta']);
@@ -80,7 +183,7 @@ class TurnoService
             $current = new Carbon("next {$this->getDia($dia)}");
             $this->planificarDia($medico, $current, $hora_desde, $hora_hasta, $input['duracion']);
         }
-        return $this->getTurnosActuales($medico);
+        return $this->getMisTurnosActuales($medico);
     }
 
     private function planificarDia(Medico $medico, Carbon $dia, Carbon $hora_desde, Carbon $hora_hasta, $duracion)
@@ -94,7 +197,11 @@ class TurnoService
         }
     }
 
-    private function crearTurno(Medico $medico, Carbon $fecha)
+    /**
+     * @param Medico $medico
+     * @param Carbon $fecha
+     */
+    public function crearTurno(Medico $medico, Carbon $fecha)
     {
         $turno = new Turno();
         $turno->medico()->associate($medico);

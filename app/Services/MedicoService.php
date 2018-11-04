@@ -10,17 +10,10 @@ namespace App\Services;
 
 use App\Especialidad;
 use App\Medico;
+use App\User;
 
 class MedicoService
 {
-
-    protected $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
     /** Todos los médicos del sistema
      * @return Medico[]|\Illuminate\Database\Eloquent\Collection
      */
@@ -46,13 +39,23 @@ class MedicoService
         return Especialidad::all();
     }
 
+    /**
+     * Busca una especialidad por su id
+     * @param $id
+     * @return Especialidad
+     */
+    public function findEspecialidad($id)
+    {
+        return Especialidad::findOrFail($id);
+    }
+
     /** Regista un usuario en el sistema
      * @param $input, los campos del nuevo usuario
      * @return Medico, el medico registrado
      */
-    public function register($input)
+    public function create($input)
     {
-        $user = $this->userService->createUser($input, 'Médico');
+        $user = new User($input, 'Médico');
         //se crea al médico y se asocia al usuario
         $medico = new Medico();
         $medico->setUser($user);
@@ -68,7 +71,7 @@ class MedicoService
      */
     public function update($input, Medico $medico)
     {
-        $this->userService->update($input, $medico->user);
+        $medico->user->actualizar($input);
         $medico->setEspecialidad($input['especialidad']);
         $medico->save();
         return $medico;

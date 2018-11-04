@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PlanTurnoRequest;
-use App\Http\Resources\TurnoResource;
+use App\Http\Requests\PlanHorarioRequest;
+use App\Http\Resources\TurnoCalendarResource;
 use App\Services\PacienteService;
 use App\Services\TurnoService;
 use App\Services\MedicoService;
@@ -25,6 +25,17 @@ class TurnoController extends Controller
         $this->pacienteService = $pacienteService;
     }
 
+     /**
+     * Retorna al usuario recepcionista una vista con los turnos que están próximos a ocurrir.
+     * y así confirmarlos cuando los pacientes arriben.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getTurnosSinConfirmar()
+    {
+        return view('turno.sin-confirmar');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,64 +53,5 @@ class TurnoController extends Controller
             'medicos' => $medicos,
             'especialidades' => $especialidades,
         ]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param PlanTurnoRequest $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function store(PlanTurnoRequest $request)
-    {
-        $input = $request->validated();
-        $medico = Auth::user()->medico;
-        $turnos = $this->turnoService->planificarSemana($input, $medico);
-        return TurnoResource::collection($turnos);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

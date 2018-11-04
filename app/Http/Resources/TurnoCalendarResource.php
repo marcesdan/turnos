@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TurnoResource extends JsonResource
+class TurnoCalendarResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,9 +14,10 @@ class TurnoResource extends JsonResource
      */
     public function toArray($request)
     {
+        $paciente = $this->paciente ? $this->paciente->getFullNameAttribute() : "Libre";
         return [
             'id' => $this->id,
-            'title' => $this->paciente ? $this->paciente->getFullNameAtribute : "Libre",
+            'title' => $paciente,
             'start' => $this->fecha,
         ];
     }

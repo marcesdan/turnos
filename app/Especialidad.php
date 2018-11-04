@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed medicos
+ */
 class Especialidad extends Model
 {
 	protected $table = 'especialidad';

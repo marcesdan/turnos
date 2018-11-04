@@ -14,7 +14,7 @@
 </div>
 <div class="row">
   <div class="col-md-6 offset-md-3">
-    <form method="post" action="/admin/medicos/{{$medico->id}}">
+    <form method="post" action="/admin/medicos/{{$medico->id}}" id="form-medico">
       <div class="tile">
         <h3 class="tile-title">Datos del médico</h3>
         <div class="tile-body">

@@ -1,6 +1,17 @@
 {
-    "/js/app.js": "/js/app.js?id=08312fc4e661ed74532c",
-    "/css/app.css": "/css/app.css?id=4090acd97dce30cf4037",
-    "/js/vendor.js": "/js/vendor.js?id=668f512207777ae370e3",
-    "/js/manifest.js": "/js/manifest.js?id=360cf4a2ac3af2c3da19"
+    "/js/turno-create.js": "/js/turno-create.js?id=034fc09bcb0d0d822564",
+    "/js/turnos-sin-confirmar.js": "/js/turnos-sin-confirmar.js?id=7ad084f930fd28b0546e",
+    "/js/turno-index.js": "/js/turno-index.js?id=049d33883ff40cb68f86",
+    "/js/turnos-confirmados.js": "/js/turnos-confirmados.js?id=eb53fea9dd48289ebed6",
+    "/js/user-index.js": "/js/user-index.js?id=eeba4739fb9fee99102d",
+    "/js/profile-medico.js": "/js/profile-medico.js?id=46f4ec33ff2f1f958691",
+    "/js/paciente-index.js": "/js/paciente-index.js?id=91a0bc6bb170b8f73085",
+    "/js/medico-index.js": "/js/medico-index.js?id=4d99bd01e0cbdf2e04b9",
+    "/js/medico-create.js": "/js/medico-create.js?id=c0267849fe11b5a9b69e",
+    "/js/login.js": "/js/login.js?id=e8f359f10604cc4624e9",
+    "/js/valiadmin.js": "/js/valiadmin.js?id=c54738e93e9b97e35046",
+    "/js/vendor.js": "/js/vendor.js?id=4cb34fded2c2833fbc1e",
+    "/js/app.js": "/js/app.js?id=538088d5f2d84c56b1ff",
+    "/css/app.css": "/css/app.css?id=5956cdb74ab33ad08d17",
+    "/js/manifest.js": "/js/manifest.js?id=190e4622f74e23489fc7"
 }

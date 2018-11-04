@@ -1,3 +1,6 @@
+import pace from 'pace-js';
+pace.start();
+
 //window._ = require('lodash');
 
 /**
@@ -6,22 +9,16 @@
  * code may be modified to fit the specific needs of your application.
  */
 
-import pace from 'pace-js';
-pace.start();
-
-try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
-    require('./vendor/bootstrap');
-    require('datatables.net-bs4');
-    require('datatables.net-buttons-bs4');
-    require('sweetalert');
-    require('select2');
-    require('bootstrap-notify');
-    require('fullcalendar');
-    window.moment = require('moment');
-} catch (e) {
-}
+window.Popper = require('popper.js').default;
+window.$ = window.jQuery = require('jquery');
+require('./vendor/bootstrap');
+require('datatables.net-bs4');
+require('datatables.net-buttons-bs4');
+require('sweetalert');
+require('select2');
+require('bootstrap-notify');
+require('fullcalendar');
+window.moment = require('moment');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -46,7 +43,6 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
-
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

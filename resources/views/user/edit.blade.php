@@ -20,6 +20,7 @@
         <div class="tile-body">
             @csrf
             @method('PUT')
+            <input type="number" name="id" value="{{$user->id}}" hidden>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label class="control-label">Nombre</label>

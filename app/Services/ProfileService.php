@@ -24,24 +24,6 @@ class ProfileService
         $this->medicoService = $medicoService;
     }
 
-    /**
-     * @param $user
-     * @return Medico
-     */
-    public function checkRole($user)
-    {
-        return $user->role->nombre;
-    }
-
-    /**
-     * @param $id
-     * @return User
-     */
-    public function findUser($id)
-    {
-        return $this->userService->find($id);
-    }
-
     /** Todas las especialidades del hospital
      * @return Especialidad[]|\Illuminate\Database\Eloquent\Collection
      */

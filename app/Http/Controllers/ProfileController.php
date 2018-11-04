@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MedicoRequest;
 use App\Http\Requests\UserRequest;
 use App\Services\ProfileService;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -37,7 +38,8 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        $role = $this->profileService->checkRole($user);
+        $role = $user->role->nombre;
+
         switch ($role) {
             case 'Médico':
                 return $this->editMedico($user->medico);

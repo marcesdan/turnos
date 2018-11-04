@@ -48,7 +48,7 @@ class UserController extends Controller
     public function register(UserRequest $request)
     {
         $input = $request->validated();
-        $user = $this->userService->register($input);
+        $user = $this->userService->create($input);
         event(new Registered($user));
         $this->sendResetLinkEmail($request);
         return redirect($this->redirectPath());

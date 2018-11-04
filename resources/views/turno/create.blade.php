@@ -22,14 +22,15 @@
         <div class="form-row">
           <div class="form-group col-md-4">
             <label class="control-label">Paciente</label>
-            <input name="nombre" type="text" class="form-control" value="{{$paciente->getFullNameAttribute()}}" disabled>
+            <input name="nombre" id="nombre" type="text" class="form-control" 
+            value="{{$paciente->getFullNameAttribute()}}" disabled>
           </div> <!--form-group -->
           <div class="form-group col-md-4 {{ $errors->has('especialidad') ? ' is-invalid' : '' }}">
             <label for="especialidad">Especialidad</label>
             <select class="form-control" id="especialidad" name="especialidad" required>
               <option></option>
               @foreach ($especialidades as $especialidad)
-                  <option value="{{ $especialidad->nombre }}">{{ $especialidad->nombre }}</option>
+                  <option value="{{ $especialidad->id }}">{{ $especialidad->nombre }}</option>
               @endforeach
               @if (old('especialidad'))
                   <option value="{{ old('especialidad') }}" selected> {{ old('especialidad') }} </option>

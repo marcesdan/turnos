@@ -48,7 +48,7 @@ class MedicoController extends Controller
     public function register(MedicoRequest $request)
     {
         $input = $request->validated();
-        $medico = $this->medicoService->register($input);
+        $medico = $this->medicoService->create($input);
         event(new Registered($medico->user));
         $this->sendResetLinkEmail($request);
         return redirect($this->redirectPath());

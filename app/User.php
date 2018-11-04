@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @property mixed nombre
@@ -80,5 +81,35 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return "{$this->nombre} {$this->apellido}";
+    }
+
+    /**
+     * User constructor.
+     * @param array $attributes
+     * @param $rol
+     */
+    public function __construct(array $attributes = [], $rol = null)
+    {
+        parent::__construct($attributes);
+        if (isset($rol)) {
+            $this->password = Hash::make(str_random(8));
+            $this->setRole($rol);
+            $this->save();
+        }
+    }
+
+    /**
+     * Actualiza los datos del usuario
+     * @param array $input
+     * @return $this
+     */
+    public function actualizar(array $input) {
+        $this->fill($input);
+        // si está presente en el array y es un nuevo rol...
+        if ( array_has($input, 'rol') )
+            $this->setRole($input['rol']);
+
+        $this->save();
+        return $this;
     }
 }

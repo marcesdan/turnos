@@ -24,13 +24,28 @@ $(function () {
             .then(module => {
                 module.init();
             });
-    } else if ($("#form-medico-create").length) {
-        import('./views/medico/create' /* webpackChunkName: "js/medico-index" */)
+    } else if ($("#form-medico").length) {
+        import('./views/medico/create' /* webpackChunkName: "js/medico-create" */)
+            .then(module => {
+                module.init();
+            });
+    } else if ($("#form-profile-medico").length) {
+        import('./views/profile/medico' /* webpackChunkName: "js/profile-medico" */)
             .then(module => {
                 module.init();
             });
     } else if ($("#tabla-paciente-index").length) {
         import('./views/paciente/index' /* webpackChunkName: "js/paciente-index" */)
+            .then(module => {
+                module.init();
+            });
+    } else if ($("#tabla-turnos-sin-confirmar").length) {
+        import('./views/turno/sinConfirmar' /* webpackChunkName: "js/turnos-sin-confirmar" */)
+            .then(module => {
+                module.init();
+            });
+    } else if ($("#tabla-turnos-confirmados").length) {
+        import('./views/turno/confirmados' /* webpackChunkName: "js/turnos-confirmados" */)
             .then(module => {
                 module.init();
             });
@@ -41,11 +56,6 @@ $(function () {
             });
     } else if ($("#calendar-create").length) {
         import('./views/turno/create' /* webpackChunkName: "js/turno-create" */)
-            .then(module => {
-                module.init();
-            });
-    } else if ($("#form-profile-medico").length) {
-        import('./views/profile/medico' /* webpackChunkName: "js/profile-medico" */)
             .then(module => {
                 module.init();
             });

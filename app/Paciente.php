@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed email
  * @property mixed documento
  * @property mixed telefono
- * @property mixed turno
+ * @property mixed turnos
  */
 class Paciente extends Model
 {

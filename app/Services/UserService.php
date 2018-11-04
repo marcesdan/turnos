@@ -9,7 +9,6 @@
 namespace App\Services;
 
 use App\User;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserService
@@ -41,25 +40,9 @@ class UserService
      * @param $input , campos del nuevo usuario
      * @return User, el usuario registrado
      */
-    public function register($input)
+    public function create($input)
     {
-        return $this->createUser($input, $input['rol']);
-    }
-
-    /** Crea un usuario en el sistema, puede ser utilizado por otros servicios
-     * @param $input , los campos del nuevo usuario
-     * @param $rol , el rol que juega el usuario en el sistema
-     * @return User, el usuario registrado
-     */
-    public function createUser($input, $rol)
-    {
-        //se crea al usuario
-        $user = new User();
-        $user->fill($input);
-        $user->password = Hash::make(str_random(8));
-        $user->setRole($rol);
-        $user->save();
-        return $user;
+        return new User($input, $input['rol']);
     }
 
     /** Actualiza el $user dado con $input
@@ -69,14 +52,7 @@ class UserService
      */
     public function update($input, User $user)
     {
-        $user->fill($input);
-
-        // si está presente en el array y es un nuevo rol...
-        if ( array_has($input, 'rol') )
-            $user->setRole($input['rol']);
-
-        $user->save();
-        return $user;
+        return $user->actualizar($input);
     }
 
 

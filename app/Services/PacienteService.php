@@ -44,14 +44,16 @@ class PacienteService
 
     /** Persiste al paciente
      * @param $input
+     * @return Paciente
      */
-    public function store($input) {
+    public function create($input) {
         return Paciente::create($input);
     }
 
     /** Actualiza al paciente
      * @param $input
      * @param Paciente $paciente
+     * @return Paciente
      */
     public function update($input, Paciente $paciente)
     {

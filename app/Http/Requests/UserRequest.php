@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
     {
         $id = $this->request->get('id');
         return [
+            'id' => 'sometimes|required',
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'telefono' => 'required|string|max:255',

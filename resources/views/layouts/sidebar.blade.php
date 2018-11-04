@@ -30,16 +30,28 @@
                 <span class="app-menu__label">Pacientes</span>
               </a>
             </li>
-            @endif
-            @if( Auth::user()->can('medico') )
             <li>
-              <a class="app-menu__item {{ Request::is('turno') ? 'active' : '' }}" href="/turnos">
-                <i class="app-menu__icon fa fa-calendar fa-lg"></i>
-                <span class="app-menu__label">Turnos</span>
+              <a class="app-menu__item {{ Request::is('turnos/sin-confirmar**') ? 'active' : '' }}" href="/turnos/sin-confirmar">
+                <i class="app-menu__icon fa fa-clock-o"></i>
+                <span class="app-menu__label">Turnos próximos</span>
               </a>
             </li>
             @endif
-            {{-- 
+            @if( Auth::user()->can('medico') )
+            <li>
+              <a class="app-menu__item {{ Request::is('turnos') ? 'active' : '' }}" href="/turnos">
+                <i class="app-menu__icon fa fa-calendar fa-lg"></i>
+                <span class="app-menu__label">Planificar mis turnos</span>
+              </a>
+            </li>
+            <li>
+              <a class="app-menu__item {{ Request::is('turnos/confirmados**') ? 'active' : '' }}" href="/turnos/confirmados">
+                <i class="app-menu__icon fa fa-heart fa-lg"></i>
+                <span class="app-menu__label">Turnos confirmados</span>
+              </a>
+            </li>
+            @endif
+            {{--
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Pages</span><i class="treeview-indicator fa fa-angle-right"></i></a>
               <ul class="treeview-menu">
                 <li><a class="treeview-item" href="blank-page.html"><i class="icon fa fa-circle-o"></i> Blank Page</a></li>

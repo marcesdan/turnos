@@ -10,4 +10,19 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected function notFound()
+    {
+        return response()->json(['error' => 'Not found'], 404);
+    }
+
+    protected function ok()
+    {
+        response()->json(['success' => 'success'], 200);
+    }
+
+    protected function noContent()
+    {
+        return response()->json([], 204);
+    }
 }

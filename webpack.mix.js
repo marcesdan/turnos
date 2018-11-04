@@ -23,7 +23,14 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .extract([
-        'jquery',
+        'jquery', 
+        'datatables.net-bs4', 'datatables.net-buttons-bs4', 
+        'sweetalert',
+        'select2',
+        'bootstrap-notify',
+        'fullcalendar',
+        'moment',
+        'axios',
     ])
     .autoload({
         jquery: ['$']
@@ -31,7 +38,7 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .version()
     .browserSync({
-        proxy: 'turno.test',
+        proxy: 'turnos.test',
         files: [
             'app/**/*.php',
             'resources/views/**/*.php',

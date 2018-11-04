@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\PlanTurnoRequest;
-use App\Http\Resources\TurnoResource;
+use App\Http\Requests\PlanHorarioRequest;
+use App\Http\Resources\TurnoCalendarResource;
+use App\Http\Resources\TurnoConfirmadoResource;
+use App\Http\Resources\TurnoSinConfirmarResource;
 use App\Services\PacienteService;
 use App\Services\TurnoService;
 use App\Services\MedicoService;
@@ -31,70 +33,130 @@ class TurnoController extends Controller
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function misTurnosActuales()
+    public function getMisTurnosActuales()
     {
         $medico = Auth::user()->medico;
-        return TurnoResource::collection(
-            $this->turnoService->getTurnosActuales($medico)
+        return TurnoCalendarResource::collection(
+            $this->turnoService->getMisTurnosActuales($medico)
+        );
+    }
+
+    /**
+     * Retorna al usuario recepcionista una vista con los turnos sin confirmar,
+     * y así poder confirmarlos cuando los pacientes arriben.
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function getTurnosSinConfirmar()
+    {
+        return TurnoSinConfirmarResource::collection(
+            $turnos = $this->turnoService->findAll()
+        );
+        /*
+        return TurnoSinConfirmarResource::collection(
+            $turnos = $this->turnoService->getTurnosSinConfirmar()
+        );
+        */
+    }
+
+    /**
+     * Retorna los turnos que están que ya han sido confirmados.
+     * Lo cual significa que el médico ya puede atenderlos
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function getMisTurnosConfirmados()
+    {
+        $medico = Auth::user()->medico;
+        return TurnoConfirmadoResource::collection(
+            $this->turnoService->getMisTurnosConfirmados($medico)
+        );
+    }
+
+    /**
+     * Devuelve una colección con todos los turno disponibles de un medico
+     * @param $id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function buscarPorMedico($id)
+    {
+        $medico = $this->medicoService->find($id);
+        return TurnoCalendarResource::collection(
+            $this->turnoService->buscarPorMedico($medico)
+        );
+    }
+
+    /**
+     *  Devuelve una colección con todos los turno disponibles de una especialidad
+     *
+     * @param $id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function buscarPorEspecialidad($id)
+    {
+        $especialidad = $this->medicoService->findEspecialidad($id);
+        return TurnoCalendarResource::collection(
+            $this->turnoService->buscarPorEspecialidad($especialidad)
         );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param PlanTurnoRequest $request
+     * @param PlanHorarioRequest $request
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function store(PlanTurnoRequest $request)
+    public function planificarHorarios(PlanHorarioRequest $request)
     {
         $input = $request->validated();
         $medico = Auth::user()->medico;
-        $turnos = $this->turnoService->planificarSemana($input, $medico);
-        return TurnoResource::collection($turnos);
+        $turnos = $this->turnoService->planificarHorarios($input, $medico);
+        return TurnoCalendarResource::collection($turnos);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage.
+     * @param $turno
+     * @param $paciente
      */
-    public function show($id)
+    public function reservarTurno($turno, $paciente)
     {
-        //
+        $turno = $this->turnoService->find($turno);
+        $paciente = $this->pacienteService->find($paciente);
+        $this->turnoService->reservarTurno($turno, $paciente);
+        response()->json(['success' => 'success'], 200);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * Confirma un turno minutos antes de que se realice la atencion del mismo
+     * @param $turno
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit($id)
+    public function confirmarTurno($turno)
     {
-        //
+        $this->turnoService->confirmarTurno($turno);
+        return parent::noContent();
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * Cancela un turno, el cual estará disponible para ser reservado por otro pacieinte
+     * @param $turno
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function cancelarTurno($turno)
     {
-        //
+        $this->turnoService->cancelarTurno($turno);
+        return parent::noContent();
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * Finaliza un turno, lo cual significa que fue atendido
+     * @param $turno
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function finalizarTurno($turno)
     {
-        //
+        $this->turnoService->finalizarTurno($turno);
+        return parent::noContent();
     }
 }

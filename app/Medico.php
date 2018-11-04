@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed user
  * @property mixed especialidad
- * @property mixed turno
+ * @property mixed turnos
  */
 class Medico extends Model
 {
