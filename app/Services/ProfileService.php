@@ -17,19 +17,16 @@ class ProfileService
 
     protected $userService;
     protected $medicoService;
+    protected $especialidadService;
 
-    public function __construct(UserService $userService, MedicoService $medicoService)
+    public function __construct(
+        UserService $userService,
+        MedicoService $medicoService
+    )
     {
         $this->userService = $userService;
         $this->medicoService = $medicoService;
-    }
 
-    /** Todas las especialidades del hospital
-     * @return Especialidad[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function findAllEspecialidades()
-    {
-        return $this->medicoService->findAllEspecialidades();
     }
 
     /** Actualiza el $user dado con $input, el user es un medico

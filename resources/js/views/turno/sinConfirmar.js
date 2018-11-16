@@ -31,7 +31,8 @@ function confirmarTurno() {
         let turnoPaciente = turno[1];
         swal({
             title: "Aviso!",
-            text: `¿Seguro desea confirmar el turno del paciente ${turnoPaciente} ?`,
+            text: `Vas a confirmar el turno del paciente ${turnoPaciente}?`,
+            customClass: 'sweet-alert',
             icon: "success",
             buttons: true,
         })
@@ -57,6 +58,7 @@ function cancelarTurno() {
         swal({
             title: "Aviso!",
             text: `¿Seguro desea cancelar del paciente ${turnoPaciente} ?`,
+            width: '1000px',
             icon: "warning",
             buttons: true,
             dangerMode: true,

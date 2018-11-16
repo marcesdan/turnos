@@ -31,14 +31,6 @@ class MedicoService
         return Medico::findOrFail($id);
     }
 
-    /** Todas las especialidades del hospital
-     * @return Especialidad[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function findAllEspecialidades()
-    {
-        return Especialidad::all();
-    }
-
     /**
      * Busca una especialidad por su id
      * @param $id

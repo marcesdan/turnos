@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\EspecialidadService;
 use App\Services\MedicoService;
 use App\Http\Requests\MedicoRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Http\Request;
 
 /**
  * Class MedicoController
@@ -29,14 +29,23 @@ class MedicoController extends Controller
      * @var MedicoService
      */
     protected $medicoService;
+    /**
+     * @var EspecialidadService
+     */
+    protected $especialidadService;
 
     /**
      * MedicoController constructor.
      * @param MedicoService $medicoService
+     * @param EspecialidadService $especialidadService
      */
-    public function __construct(MedicoService $medicoService)
+    public function __construct(
+        MedicoService $medicoService,
+        EspecialidadService $especialidadService
+    )
     {
         $this->medicoService = $medicoService;
+        $this->especialidadService = $especialidadService;
     }
 
     /**
@@ -72,7 +81,7 @@ class MedicoController extends Controller
      */
     public function create()
     {
-        $especialidades = $this->medicoService->findAllEspecialidades();
+        $especialidades = $this->especialidadService->findAll();
         return view('medico.create', ['especialidades' => $especialidades]);
     }
 
@@ -96,8 +105,7 @@ class MedicoController extends Controller
     public function edit($id)
     {
         $medico = $this->medicoService->find($id);
-        $especialidades = $this->medicoService->findAllEspecialidades();
-
+        $especialidades = $this->especialidadService->findAll();
         return view('medico.edit', [
             'medico' => $medico,
             'especialidades' => $especialidades

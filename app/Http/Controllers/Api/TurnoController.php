@@ -3,15 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\PlanHorarioRequest;
+use App\Http\Requests\ReservarTurnoPublicoRequest;
 use App\Http\Resources\TurnoCalendarResource;
 use App\Http\Resources\TurnoConfirmadoResource;
+use App\Http\Resources\TurnoDisponibleResource;
 use App\Http\Resources\TurnoSinConfirmarResource;
+use App\Mail\ReservarTurno;
+use App\Services\EspecialidadService;
 use App\Services\PacienteService;
 use App\Services\TurnoService;
 use App\Services\MedicoService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class TurnoController extends Controller
 {
@@ -50,7 +56,7 @@ class TurnoController extends Controller
     public function getTurnosSinConfirmar()
     {
         return TurnoSinConfirmarResource::collection(
-            $turnos = $this->turnoService->findAll()
+            $turnos = \App\Turno::whereDate('fecha', '=', '2018-11-12')->get()
         );
         /*
         return TurnoSinConfirmarResource::collection(
@@ -87,6 +93,19 @@ class TurnoController extends Controller
     }
 
     /**
+     * Devuelve una colección con todos los turno disponibles de un medico
+     * @param $id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function disponiblesPorMedico($id)
+    {
+        $medico = $this->medicoService->find($id);
+        return TurnoDisponibleResource::collection(
+            $this->turnoService->buscarPorMedico($medico)
+        );
+    }
+
+    /**
      *  Devuelve una colección con todos los turno disponibles de una especialidad
      *
      * @param $id
@@ -94,9 +113,25 @@ class TurnoController extends Controller
      */
     public function buscarPorEspecialidad($id)
     {
-        $especialidad = $this->medicoService->findEspecialidad($id);
+        $espServ = new EspecialidadService();
+        $especialidad = $espServ->find($id);
         return TurnoCalendarResource::collection(
-            $this->turnoService->buscarPorEspecialidad($especialidad)
+            $espServ->turnosPorEspecialidad($especialidad)
+        );
+    }
+
+    /**
+     *  Devuelve una colección con todos los turno disponibles de una especialidad
+     *
+     * @param $id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function disponiblesPorEspecialidad($id)
+    {
+        $espServ = new EspecialidadService();
+        $especialidad = $espServ->find($id);
+        return TurnoDisponibleResource::collection(
+            $espServ->turnosPorEspecialidad($especialidad)
         );
     }
 
@@ -124,6 +159,24 @@ class TurnoController extends Controller
         $turno = $this->turnoService->find($turno);
         $paciente = $this->pacienteService->find($paciente);
         $this->turnoService->reservarTurno($turno, $paciente);
+        response()->json(['success' => 'success'], 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param ReservarTurnoPublicoRequest $request
+     */
+    public function reservarTurnoPublico(ReservarTurnoPublicoRequest $request)
+    {
+        $input = $request->validated();
+        $turno = $this->turnoService->find(
+            $input['turno']
+        );
+        $paciente = $this->pacienteService->find(
+            $input['paciente']
+        );
+        //$this->turnoService->reservarTurno($turno, $paciente);
+        Mail::to($paciente->email)->send(new ReservarTurno($turno, $paciente));
         response()->json(['success' => 'success'], 200);
     }
 

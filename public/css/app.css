@@ -2274,11 +2274,6 @@ pre code {
   opacity: 1;
 }
 
-.form-control:-ms-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
 .form-control::-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
@@ -13903,10 +13898,6 @@ a.fc-more:hover {
 }
 
 .app-search__input::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-.app-search__input:-ms-input-placeholder {
   color: rgba(0, 0, 0, 0.4);
 }
 

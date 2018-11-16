@@ -4449,6 +4449,7 @@ $(function () {
         module.init();
     });
 
+    // poco feliz, y aún menos elegante...
     if ($("#tabla-user-index").length) {
         __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, "./resources/js/views/user/index.js")).then(function (module) {
             module.init();

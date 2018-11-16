@@ -119,23 +119,6 @@ class TurnoService
             ->get();
     }
 
-    /**
-     * Retorna los turnos disponibles de una especialidad dada
-     * @param Especialidad $especialidad
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function buscarPorEspecialidad(Especialidad $especialidad)
-    {
-        // nos quedamos con los ids de todos los médicos de una especialidad
-        $medicos = $especialidad->medicos
-            ->pluck('id')
-            ->all();
-
-        return Turno::whereNull('reservado')
-            ->where('fecha', '>', Carbon::now()->addHour())
-            ->whereIn('medico_id', $medicos)->get();
-    }
-
     public function reservarTurno(Turno $turno, Paciente $paciente)
     {
         $turno->reservarTurno($paciente);

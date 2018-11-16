@@ -33,7 +33,7 @@
             <li>
               <a class="app-menu__item {{ Request::is('turnos/sin-confirmar**') ? 'active' : '' }}" href="/turnos/sin-confirmar">
                 <i class="app-menu__icon fa fa-clock-o"></i>
-                <span class="app-menu__label">Turnos próximos</span>
+                <span class="app-menu__label">Turnos sin confirmar</span>
               </a>
             </li>
             @endif

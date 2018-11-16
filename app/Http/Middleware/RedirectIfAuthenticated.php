@@ -18,6 +18,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+
+            switch (Auth::user()->role->nombre) {
+                case 'Administrador': return redirect('/admin/usuarios');
+                case 'Recepcionista': return redirect ('/pacientes');
+                case 'Médico': return redirect ('/turnos');
+            }
             return redirect('/');
         }
 

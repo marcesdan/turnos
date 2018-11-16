@@ -14,6 +14,7 @@ $(function () {
             module.init();
         });
 
+    // poco feliz, y aún menos elegante...
     if ($("#tabla-user-index").length) {
         import('./views/user/index' /* webpackChunkName: "js/user-index" */)
             .then(module => {

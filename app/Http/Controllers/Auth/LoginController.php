@@ -22,10 +22,17 @@ class LoginController extends Controller
 
     /**
      * Where to redirect users after login.
-     *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/admin';
+    protected function redirectTo()
+    {
+        switch (auth()->user()->role->nombre) {
+            case 'Administrador': return '/admin/usuarios';
+            case 'Recepcionista': return '/pacientes';
+            case 'Médico': return '/turnos';
+        }
+        return '/';
+    }
 
     /**
      * Create a new controller instance.

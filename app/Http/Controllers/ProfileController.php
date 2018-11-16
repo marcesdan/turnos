@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicoRequest;
 use App\Http\Requests\UserRequest;
+use App\Services\EspecialidadService;
 use App\Services\ProfileService;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,8 @@ class ProfileController extends Controller
     private function editMedico($medico)
     {
         // un médico podría cambiar su especialidad...
-        $especialidades = $this->profileService->findAllEspecialidades();
+        $espService = new EspecialidadService();
+        $especialidades = $espService->findAll();
         return view('profile.medico-edit', [
             'medico' => $medico,
             'especialidades' => $especialidades

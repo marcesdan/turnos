@@ -31,7 +31,7 @@ function finalizarTurno() {
         let turnoDocumento = turno[2];
         swal({
             title: "Aviso!",
-            text: `Usted está a punto de finalizar el turno del paciente ${turnoPaciente} ?`,
+            text: `Va a finalizar el turno del paciente ${turnoPaciente}`,
             icon: "success",
             buttons: true,
         })
