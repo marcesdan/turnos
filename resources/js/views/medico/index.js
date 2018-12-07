@@ -17,11 +17,12 @@ function deleteMedico() {
         let medicoApellido = medico[2];
 
         swal({
-            title: "Aviso!",
+            title: "Atención!",
             text: "¿Seguro desea eliminar al médico " + medicoNombre + " " + medicoApellido + "?",
             icon: "warning",
-            buttons: true,
+            buttons: ["Cancelar", "Eliminar"],
             dangerMode: true,
+            closeOnClickOutside: false,
         })
             .then((willDelete) => {
                 if (willDelete) {

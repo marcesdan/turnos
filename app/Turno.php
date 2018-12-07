@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * @property mixed id
  * @property Carbon fecha
  * @property mixed reservado
  * @property mixed confirmado

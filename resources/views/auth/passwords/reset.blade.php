@@ -1,6 +1,14 @@
 @extends('layouts.auth')
+@section('styles')
+    <style type="text/css">
+        .login-content .login-box {
+            min-height: 430px;
+            min-width: 380px;
+        }
+    </style>
+@endsection
 @section('content')
-  <div class="login-box" style="min-height: 410px";>
+  <div class="login-box">
     <form class="login-form" method="POST" action="{{ route('password.update') }}" >
         @csrf
         <h4 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Restablecer contraseña</h4>

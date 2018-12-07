@@ -37,7 +37,7 @@ class EspecialidadService
      * @param Especialidad $especialidad
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function turnosPorEspecialidad(Especialidad $especialidad)
+    public function disponiblesPorEspecialidad(Especialidad $especialidad)
     {
         // nos quedamos con los ids de todos los médicos de una especialidad
         $medicos = $especialidad->medicos

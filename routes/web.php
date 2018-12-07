@@ -1,7 +1,7 @@
 <?php
 
-Route::view('/', 'portada');
-Route::view('/ingreso', 'ingreso');
+Route::view('/', 'portada')->name('portada');
+Route::view('/ingreso', 'ingreso')->name('ingreso');
 
 /*
 |--------------------------------------------------------------------------
@@ -59,12 +59,12 @@ Route::group(['middleware' => 'auth'], function () {
               Route::view('confirmados', 'turno.confirmados');
         });
 
-        // Gestión de turnos vía api
-        Route::prefix('/api/turnos')->group(function () {
-            Route::get('', 'Api\TurnoController@getMisTurnosActuales');
-            Route::get('confirmados', 'Api\TurnoController@getMisTurnosConfirmados');
-            Route::post('', 'Api\TurnoController@planificarHorarios');
-            Route::put('{turno}/finalizar', 'Api\TurnoController@finalizarTurno');
+        // Gestión de turnos vía api DANGER
+        Route::prefix('/internal-api/turnos')->group(function () {
+            Route::get('', 'InternalApi\MedicoController@turnosActuales');
+            Route::get('confirmados', 'InternalApi\MedicoController@turnosConfirmados');
+            Route::post('', 'InternalApi\TurnoController@planificarHorarios');
+            Route::put('{turno}/finalizar', 'InternalApi\TurnoController@finalizarTurno');
         });
     });
 
@@ -89,14 +89,19 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/sin-confirmar', 'TurnoController@getTurnosSinConfirmar');
         });
 
-        Route::prefix('/api')->group(function () {
+
+        Route::prefix('/internal-api')->group(function () {
             Route::prefix('/turnos')->group(function () {
-                Route::get('especialidad/{id}', 'Api\TurnoController@buscarPorEspecialidad');
-                Route::get('medico/{id}', 'Api\TurnoController@buscarPorMedico');
-                Route::post('{turno}/paciente/{paciente}', 'Api\TurnoController@reservarTurno');
-                Route::get('sin-confirmar', 'Api\TurnoController@getTurnosSinConfirmar');
-                Route::put('{turno}/confirmar', 'Api\TurnoController@confirmarTurno');
-                Route::put('{turno}/cancelar', 'Api\TurnoController@cancelarTurno');
+
+                // DANGER
+                Route::get('especialidad/{id}', 'Api\EspecialidadController@disponiblesPorEspecialidad');
+                Route::get('medico/{id}', 'Api\MedicoController@turnosDisponibles');
+
+                // works
+                Route::post('{turno}/paciente/{paciente}', 'InternalApi\TurnoController@reservarTurno');
+                Route::get('sin-confirmar', 'InternalApi\TurnoController@getTurnosSinConfirmar');
+                Route::put('{turno}/confirmar', 'InternalApi\TurnoController@confirmarTurno');
+                Route::put('{turno}/cancelar', 'InternalApi\TurnoController@cancelarTurno');
             });
         });  
     });

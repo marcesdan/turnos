@@ -31,6 +31,7 @@ function initCalendar() {
     };
     calendar.fullCalendar({
         themeSystem: 'bootstrap4',
+        locale: 'es',
         customButtons: customButtons,
         header: header,
         defaultDate: moment(),

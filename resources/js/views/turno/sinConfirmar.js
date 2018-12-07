@@ -1,5 +1,6 @@
 import swal from "sweetalert";
 import {turnoService} from "../../services/turnoService";
+import {internalApiPrefix} from "../../helpers/config";
 
 let tablaTurnosSinConfirmar;
 const init = () => {
@@ -30,15 +31,16 @@ function confirmarTurno() {
         let turnoId = turno[0];
         let turnoPaciente = turno[1];
         swal({
-            title: "Aviso!",
-            text: `Vas a confirmar el turno del paciente ${turnoPaciente}?`,
+            title: "Confirmación",
+            text: `Vas a confirmar el turno del paciente ${turnoPaciente}`,
             customClass: 'sweet-alert',
             icon: "success",
-            buttons: true,
+            buttons: ["Cancelar", "Confirmar"],
+            closeOnClickOutside: false,
         })
             .then((willSuccess) => {
                 if (willSuccess) {
-                    axios.put(`/api/turnos/${turnoId}/confirmar`);
+                    axios.put(`/${internalApiPrefix}/turnos/${turnoId}/confirmar`);
                     swal("Turno confirmado con éxito!", {
                         icon: "success",
                     });
@@ -56,16 +58,17 @@ function cancelarTurno() {
         let turnoId = turno[0];
         let turnoPaciente = turno[1];
         swal({
-            title: "Aviso!",
-            text: `¿Seguro desea cancelar del paciente ${turnoPaciente} ?`,
+            title: "Atención!",
+            text: `Va a cancelar el turno del paciente ${turnoPaciente}`,
             width: '1000px',
             icon: "warning",
-            buttons: true,
+            buttons: ["Volver", "Cancelar turno"],
+            closeOnClickOutside: false,
             dangerMode: true,
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    axios.put(`/api/turnos/${turnoId}/cancelar`);
+                    axios.put(`/${internalApiPrefix}/turnos/${turnoId}/cancelar`);
                     swal("Turno cancelado con éxito!", {
                         icon: "success",
                     });
@@ -98,7 +101,7 @@ function datatable() {
         "dom": '<"toolbar">frtip',
         "columns": [
             {"mData": "id", "visible": false, "bSortable": false},
-            {"data": "paciente"},
+            {"data": "nombre"},
             {"data": "medico"},
             {"data": "especialidad"},
             {"data": "hora"},

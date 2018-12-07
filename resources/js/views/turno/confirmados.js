@@ -1,5 +1,6 @@
 import swal from "sweetalert";
 import {turnoService} from "../../services/turnoService";
+import {internalApiPrefix} from "../../helpers/config";
 
 let tablaTurnosConfirmados;
 const init = () => {
@@ -30,14 +31,15 @@ function finalizarTurno() {
         let turnoPaciente = turno[1];
         let turnoDocumento = turno[2];
         swal({
-            title: "Aviso!",
+            title: "Confirmación",
             text: `Va a finalizar el turno del paciente ${turnoPaciente}`,
             icon: "success",
-            buttons: true,
+            buttons: ["Cancelar", "Guardar"],
+            closeOnClickOutside: false,
         })
             .then((willSuccess) => {
                 if (willSuccess) {
-                    axios.put(`/api/turnos/${turnoId}/finalizar`);
+                    axios.put(`/${internalApiPrefix}/turnos/${turnoId}/finalizar`);
                     swal("Turno finalizado con éxito!", {
                         icon: "success",
                     });

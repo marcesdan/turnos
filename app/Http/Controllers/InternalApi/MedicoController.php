@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\InternalApi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MedicoCollection;
 use App\Http\Resources\TurnoResource;
 use App\Services\MedicoService;
 use App\Services\TurnoService;
+use Illuminate\Support\Facades\Auth;
 
 class MedicoController extends Controller
 {
@@ -25,27 +25,29 @@ class MedicoController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Devuelve una colección con todos los turno vigentes del medico autenticado
      *
-     * @return MedicoCollection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function turnosActuales()
     {
-        return new MedicoCollection(
-            $this->medicoService->findAll()
+        $medico = Auth::user()->medico;
+        return TurnoResource::collection(
+            $this->medicoService->getTurnosActuales($medico)
         );
     }
 
     /**
-     * Devuelve una colección con todos los turnos disponibles de un medico
-     * @param $id
+     * Retorna los turnos que están que ya han sido confirmados.
+     * Lo cual significa que el médico ya puede atenderlos
+     *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function turnosDisponibles($id)
+    public function turnosConfirmados()
     {
-        $medico = $this->medicoService->find($id);
+        $medico = Auth::user()->medico;
         return TurnoResource::collection(
-            $this->medicoService->getTurnosDisponibles($medico)
+            $this->medicoService->getTurnosConfirmados($medico)
         );
     }
 }

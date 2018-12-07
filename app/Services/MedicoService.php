@@ -41,6 +41,48 @@ class MedicoService
         return Especialidad::findOrFail($id);
     }
 
+    /**
+     * Retorna los turnos disponibles de un médico dado
+     * @param Medico $medico
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTurnosDisponibles(Medico $medico)
+    {
+        return $medico->turnos()
+            ->whereNull('reservado')
+            ->where('fecha', '>', now()->addHour())
+            ->get();
+    }
+
+    /**
+     * Retorna todos los turnos actuales de un médico, ya sean reservados o no, confirmados o no.
+     * los de now() en adelante.
+     * @param Medico $medico
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTurnosActuales(Medico $medico)
+    {
+        return $medico->turnos()
+            ->whereNull('finalizado')
+            ->where('fecha', '>=', today())
+            ->get();
+    }
+
+    /**
+     * Retorna los turnos ya han sido confirmados.
+     * Lo cual significa que el médico ya puede atenderlos
+     * @param Medico $medico
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getTurnosConfirmados(Medico $medico)
+    {
+        return $medico->turnos()
+            ->whereNull('finalizado')
+            ->whereNotNull('confirmado')
+            ->get();
+    }
+
+
     /** Regista un usuario en el sistema
      * @param $input, los campos del nuevo usuario
      * @return Medico, el medico registrado

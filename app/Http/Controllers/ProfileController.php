@@ -6,7 +6,6 @@ use App\Http\Requests\MedicoRequest;
 use App\Http\Requests\UserRequest;
 use App\Services\EspecialidadService;
 use App\Services\ProfileService;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 
 

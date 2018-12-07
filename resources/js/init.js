@@ -18,6 +18,7 @@ require('sweetalert');
 require('select2');
 require('bootstrap-notify');
 require('fullcalendar');
+require('fullcalendar/dist/locale/es');
 window.moment = require('moment');
 
 /**

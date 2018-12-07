@@ -16,11 +16,12 @@ function deleteUser() {
         let userNombre = user[1];
         let userApellido = user[2];
         swal({
-            title: "Aviso!",
+            title: "Atención!",
             text: "¿Seguro desea eliminar al usuario " + userNombre + " " + userApellido + "?",
             icon: "warning",
-            buttons: true,
+            buttons: ["Cancelar", "Eliminar"],
             dangerMode: true,
+            closeOnClickOutside: false,
         })
             .then((willDelete) => {
                 if (willDelete) {

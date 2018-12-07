@@ -12,6 +12,7 @@ use App\Especialidad;
 use App\Medico;
 use App\Paciente;
 use App\Turno;
+use App\Solicitud;
 use Carbon\Carbon;
 
 class TurnoService
@@ -36,19 +37,6 @@ class TurnoService
     }
 
     /**
-     * Retorna todos los turnos que aun no han sido atendidos, ni confirmados, ni reservados
-     * @param Medico $medico
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getMisTurnosActuales(Medico $medico)
-    {
-        return $medico->turnos()
-            ->whereNull('finalizado')
-            ->where('fecha', '>=', Carbon::today())
-            ->get();
-    }
-
-    /**
      * Retorna los turnos que están próximos a ocurrir.
      * Proximidad establecida de una hora por defecto.
      * @return \Illuminate\Database\Eloquent\Collection
@@ -61,21 +49,6 @@ class TurnoService
             ->whereNotNull('reservado')
             ->whereNull('confirmado')
             ->whereBetween('fecha', [$desde, $hasta])
-            ->get();
-    }
-
-    /**
-     * Retorna los turnos que están que ya han sido confirmados.
-     * Lo cual significa que el médico ya puede atenderlos
-     * @param Medico $medico
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getMisTurnosConfirmados(Medico $medico)
-    {
-        return $medico->turnos()
-            ->whereNull('finalizado')
-            ->whereNotNull('reservado')
-            ->whereNotNull('confirmado')
             ->get();
     }
 
@@ -103,19 +76,6 @@ class TurnoService
             ->whereBetween('fecha', [Carbon::today(), Carbon::tomorrow()])
             ->whereNotNull('reservado')
             ->whereNull('finalizado')
-            ->get();
-    }
-
-    /**
-     * Retorna los turnos disponibles de un médico dado
-     * @param Medico $medico
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function buscarPorMedico(Medico $medico)
-    {
-        return $medico->turnos()
-            ->whereNull('reservado')
-            ->where('fecha', '>', Carbon::now()->addHour())
             ->get();
     }
 

@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PlanHorarioRequest;
-use App\Http\Resources\TurnoCalendarResource;
 use App\Services\EspecialidadService;
+use App\Services\MedicoService;
 use App\Services\PacienteService;
 use App\Services\TurnoService;
-use App\Services\MedicoService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class TurnoController extends Controller
 {

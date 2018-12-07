@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\InternalApi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TurnoResource;
 use App\Services\EspecialidadService;
 
 class EspecialidadController extends Controller
@@ -25,20 +24,5 @@ class EspecialidadController extends Controller
         return response()->json(['data' =>
             $this->especialidadService->findAll()
         ], 200);
-    }
-
-    /**
-     *  Devuelve una colección con todos los turnos disponibles de una especialidad
-     *
-     * @param $id
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
-     */
-    public function disponiblesPorEspecialidad($id)
-    {
-        $espServ = new EspecialidadService();
-        $especialidad = $espServ->find($id);
-        return TurnoResource::collection(
-            $espServ->disponiblesPorEspecialidad($especialidad)
-        );
     }
 }

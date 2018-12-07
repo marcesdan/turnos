@@ -60,11 +60,6 @@ $(function () {
             .then(module => {
                 module.init();
             });
-    } else if ($(".login-content").length) {
-        import('./views/login' /* webpackChunkName: "js/login" */)
-            .then(module => {
-                module.init();
-            });
     }
 });
 

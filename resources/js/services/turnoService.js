@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {internalApiPrefix, publicApiPrefix} from '../helpers/config';
+import {transfomer} from "../helpers/transformer";
 
 export const turnoService = {
     buscarPorEspecialidad,
@@ -18,11 +20,14 @@ export const turnoService = {
 function buscarPorEspecialidad(id) {
     const requestOptions = {
         method: 'GET',
-        url: `/api/turnos/especialidad/${id}`,
+        url: `/${internalApiPrefix}/turnos/especialidad/${id}`,
         headers: {'Content-Type': 'application/json'},
     };
     return axios(requestOptions)
-        .then(response => response.data.data)
+        .then(response =>
+            // se transforma al formato de fullcalendar
+            transfomer.turnosToCalendarFormat(response.data.data)
+        )
         .catch(error => {
             if (error.response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -34,11 +39,14 @@ function buscarPorEspecialidad(id) {
 function buscarPorMedico(id) {
     const requestOptions = {
         method: 'GET',
-        url: `/api/turnos/medico/${id}`,
+        url: `/${internalApiPrefix}/turnos/medico/${id}`,
         headers: {'Content-Type': 'application/json'},
     };
     return axios(requestOptions)
-        .then(response => response.data.data)
+        .then(response =>
+            // se transforma al formato de fullcalendar
+            transfomer.turnosToCalendarFormat(response.data.data)
+        )
         .catch(error => {
             if (error.response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -50,11 +58,13 @@ function buscarPorMedico(id) {
 function getTurnosSinConfirmar() {
     const requestOptions = {
         method: 'GET',
-        url: '/api/turnos/sin-confirmar/',
+        url: `/${internalApiPrefix}/turnos/sin-confirmar/`,
         headers: {'Content-Type': 'application/json'},
     };
     return axios(requestOptions)
-        .then(response => response.data.data)
+        .then(response =>
+            transfomer.turnosToSinConfirmarFormat(response.data.data)
+        )
         .catch(error => {
             if (error.response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -66,7 +76,7 @@ function getTurnosSinConfirmar() {
 function reservarTurno(turno, paciente) {
     const requestOptions = {
         method: 'POST',
-        url: `/api/turnos/${turno}/paciente/${paciente}/`,
+        url: `/${internalApiPrefix}/turnos/${turno}/paciente/${paciente}/`,
         headers: {'Content-Type': 'application/json'},
     };
     return axios(requestOptions)
@@ -87,11 +97,14 @@ function reservarTurno(turno, paciente) {
 function getMisTurnosActuales() {
     const requestOptions = {
         method: 'GET',
-        url: '/api/turnos',
+        url: `/${internalApiPrefix}/turnos`,
         headers: {'Content-Type': 'application/json'},
     };
     return axios(requestOptions)
-        .then(response => response.data.data)
+        .then(response =>
+            // se transforma al formato de fullcalendar
+            transfomer.turnosToCalendarFormat(response.data.data)
+        )
         .catch(error => {
             if (error.response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -103,11 +116,13 @@ function getMisTurnosActuales() {
 function getMisTurnosConfirmados() {
     const requestOptions = {
         method: 'GET',
-        url: '/api/turnos/confirmados/',
+        url: `/${internalApiPrefix}/turnos/confirmados/`,
         headers: {'Content-Type': 'application/json'},
     };
     return axios(requestOptions)
-        .then(response => response.data.data)
+        .then(response =>
+            transfomer.turnosToConfirmadosFormat(response.data.data)
+        )
         .catch(error => {
             if (error.response.status === 401) {
                 // auto logout if 401 response returned from api
@@ -119,7 +134,7 @@ function getMisTurnosConfirmados() {
 function planificarSemana(data) {
     const requestOptions = {
         method: 'POST',
-        url: '/api/turnos',
+        url: `/${internalApiPrefix}/turnos`,
         headers: {'Content-Type': 'application/json'},
         data: {
             hora_desde: data.hora_desde,
@@ -129,7 +144,10 @@ function planificarSemana(data) {
         }
     };
     return axios(requestOptions)
-        .then(response => response.data.data)
+        .then(response => 
+            // se transforma al formato de fullcalendar
+            transfomer.turnosToCalendarFormat(response.data.data)
+        )
         .catch(error => {
             if (error.response.status === 401) {
                 // auto logout if 401 response returned from api

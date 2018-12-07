@@ -3,8 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 /**
+ * @property mixed id
  * @property mixed nombre
  * @property mixed apellido
  * @property mixed email
@@ -14,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Paciente extends Model
 {
+
+    use Notifiable;
 
 	protected $table = 'paciente';
 

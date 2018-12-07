@@ -16,11 +16,12 @@ function deletePaciente() {
         let pacienteNombre = paciente[1];
         let pacienteApellido = paciente[2];
         swal({
-            title: "Aviso!",
+            title: "Atención!",
             text: `Seguro desea eliminar al paciente ${pacienteNombre} ${pacienteApellido}?`,
             icon: "warning",
-            buttons: true,
+            buttons: ["Cancelar", "Eliminar"],
             dangerMode: true,
+            closeOnClickOutside: false,
         })
             .then((willDelete) => {
                 if (willDelete) {
